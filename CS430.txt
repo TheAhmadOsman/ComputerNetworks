@@ -1,0 +1,41 @@
+                                                    September 12
+What are three ways to deal was too many requests:
+    1-Ignore
+    2-Add power -> 2.5-Load balance
+    3-Optimize code (too expensive)
+
+P2P works well for load balancing.
+
+A - IPv4 - 32 bit - 2^32 ~ 4.10^9
+
+AAAA - IPv6 - 128 bit
+
+MX
+
+NS
+
+nslookup -type=AAAA luther.edu for example.
+
+DNS is the top layer protocol, if i go to test.mit.edu, it asks edu zone for more ip info, then the mit for its server ip, then test for its server ip too.
+
+How many ports are there: 2^16 = 65536
+
+In HTTP / DNS messages:
+    HTTP / DNS         => Application
+    TCP /  UDP         => Transport
+    IP          => Network
+    Ethernet    => Link
+    Wired/WiFi  => Physical
+A messeage response is as follows
+
+Ethernet Header - IP Header - UDP Header - DNS MSG
+Type:x0800        Porto:x11 - port:53
+Messeage for IP   means udp - means port 53 for DNS messages
+
+    The message on a lower level gives informtion about the higher level protocol request
+
+Conversion from Binary to Hexadecimal to Decimal.
+
+The three way handshake are 3 messages in TCP after the DNS message. There are threeway handshake at the termination too.
+
+The messages from TCP for example are transport-layer higher level messages. It is not necessary for messages to happen on the Application layer, it can even happen on the network/link layers too.
