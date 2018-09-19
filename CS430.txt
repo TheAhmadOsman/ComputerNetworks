@@ -41,3 +41,17 @@ The three way handshake are 3 messages in TCP after the DNS message. There are t
 The messages from TCP for example are transport-layer higher level messages. It is not necessary for messages to happen on the Application layer, it can even happen on the network/link layers too.
 
 Local cache, then the gateway, then cache on the proxy server, then some stuff on a CDN(content delivery network, for like Netflix), and then data from the servers.
+
+For email exchange protocols, you either use pop3 and smtp or imap and smtp.
+
+----
+project 2
+
+python3 resolve.py A website dns
+
+python3 -m pytest -v test_solver.py
+
+test fb.com where only one response
+test yahoo.com for six different responses
+
+----
