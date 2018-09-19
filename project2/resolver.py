@@ -43,11 +43,11 @@ def bytes_to_val(bytes_lst: list) -> int:
     '''Merge 2 bytes into a value'''
     raise NotImplementedError
 
-def get_2_bits(bytes: list) -> int:
+def get_2_bits(bytes_lst: list) -> int:
     '''Extract first two bits of a two-byte sequence'''
     raise NotImplementedError
 
-def get_offset(bytes: list) -> int:
+def get_offset(bytes_lst: list) -> int:
     '''Extract size of the offset from a two-byte sequence'''
     raise NotImplementedError
 
@@ -99,7 +99,7 @@ def resolve(query: str) -> None:
 def main(*query):
     '''Main function'''
     if len(query[0]) < 3 or len(query[0]) > 4:
-        print('Proper use: python3 resolver <type> <domain> <server>')
+        print('Proper use: python3 resolver.py <type> <domain> <server>')
         exit()
     resolve(query)
 
