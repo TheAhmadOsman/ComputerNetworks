@@ -55,3 +55,66 @@ test fb.com where only one response
 test yahoo.com for six different responses
 
 ----
+
+Base 10 -> 10 digits
+Octal, base 8, from 0 to 7, then 10 to 17, then 20 to 27
+Hexadecimal, base 16, from 0 to 9 and then A to F. Then 10 happens, to 1F, for example hex(28) gives 1c.
+Binary, 0 and 1. 0, 1, 10, 11, 
+
+For bits, its either Big Endian or Little Endian.
+
+Bit ^ 2 from the right to left.
+
+0, 1, 10, 11, 100, 101, 110, 111, 1000
+
+430 base of 10 to binary base 2 = 110101110 -> Do it by hand or TI
+binary to decimal. 
+
+430 = 4 * 10^2 + 3 * 10^1 + 0 * 10^0
+
+110101110 base 2 = 1 * 2^8 + 1 * 2^7 + 1 * 2^6... From right to left the bits are 8 to 0.
+
+110101110 base 2 is equal 1AE in base 16. for the 16 digits in Hexadecimal, there are only 4 binary digits, 4 bits, needed for it. So do it as following
+1 1010 1110 => 
+1   A   E
+
+Would apply from octal or hexadecimal to binary and otherwise. The highest needed for octal is 111, since 8 digits from 0 to 7. So three binary digits for each octal number, and do it from the right to left, same as in how hexadecimal's work.
+
+binary addition
+
+110101110
+100001001
+
+1010110111
+
+----------
+
+negative numbers in binary, follow the one's compliment rule where the left most bits are given a flag that these numbers are one's compliment and they're basically the flipped bits for the same number
+
+110101110 would base
+001010001 in one's compliment, in order to be neagtive.
+
+two's compliment, you just add one, to the one's compliment.
+
+001010001 would be
+001010010
+
+have a trueth table of 
+x | y | x&y | x|y | x^y
+
+right shift >> for binary, left shift <<
+
+to multiple a number by 2, shift it to the left one position
+to divide it by 2, shift it to the right one position
+
+google bits extraction
+
+the & operator and xor to be google
+
+the & operator is litteraly both either true or false
+
+to extract three bits from 10101110
+                           00000111
+                    do & on.    110
+
+extract the left ones, you do a shift after the and operator
