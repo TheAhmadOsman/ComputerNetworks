@@ -1,3 +1,30 @@
+Fiber, copper, radio -> 
+HTTP -> 
+Host -> 
+NAT -> 
+Router -> 
+Service -> 
+Skype -> VoIP
+TCP -> 
+Transmission rate -> 
+UDP -> 
+
+Order of Protocols Layers
+    Application Layer -> Emails, browsers
+    Transport Layer -> Data coming in, packets
+    Network Layer -> Lan, WiFi
+    Link Layer -> Take tyhat message into 
+    Physical Layer -> The actual physical stuff
+
+Wireshark -> Packet sniffer
+
+Protocal Encapsulation - Right to Left
+    PhysicalSignal|LL|Net|Tran|AppMsg|Checksum(CRS)
+
+Loopback
+
+The initiation between the client and server connection is called three handshake
+
                                                     September 12
 What are three ways to deal was too many requests:
     1-Ignore
