@@ -1,0 +1,29 @@
+What does HTTP stand for?
+	Hypertext Transfer Protocol
+
+What HTTP methods are there?
+	Get, Post, Update, Delete... These are the mainly used ones
+
+What does DNS stand for?
+	Domain Naming Service
+
+What is the latest version of IP?
+	IP V6
+
+What does Wi-Fi stand for?
+	Wireless Fidelity
+
+How does ping utility work?
+	To ping a server and figure out a connection can be establihed or not
+
+What is the difference between telnet and ssh?
+	Telnet is not secure/encrypted while ssh is
+
+What does nslookup do?
+	Figures out ip addresses of a domain
+
+How does traceroute utility work?
+	I am guessing here... This utility might be a pocket sniffer?
+
+What command display networking information on Linux?
+	ipconfig
