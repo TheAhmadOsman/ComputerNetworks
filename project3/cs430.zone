@@ -1,0 +1,23 @@
+$ORIGIN cs430.luther.edu.					; This is a comment
+$TTL	86400 								; 24 hours could have been written as 24h or 1d
+											; $TTL used for all RRs without explicit TTL value
+@  		1D  IN  SOA ns.cs430.luther.edu. admin.cs430.luther.edu. (
+			      2018091601 				; serial
+			      3H 						; refresh
+			      15 						; retry
+			      1w 						; expire
+			      3h 						; nxdomain ttl
+			     )
+       		IN  NS     ns.cs430.luther.edu. 	; in the domain
+       		IN  MX  10 mail.cs430.luther.edu. 	; mail server
+       		IN  MX  20 mail2.cs430.luther.edu. 	; mail server
+											; server host definitions
+cs430.luther.edu.  A  192.168.0.2
+                   AAAA 2001:db8:10::2
+ns     		IN  A      192.168.0.1  			; name server definition     
+www    		IN  CNAME  cs430.luther.edu.  		; web server definition
+mail   		IN  A      192.168.0.3  			; mail server definition
+www    			TXT    "This is a web server"	; text description
+roman  	1s  IN  A         1.2.3.4
+       	1h  IN  A         1.2.3.5
+            IN  AAAA      abcd:abcd:abcd:abcd:1234:1234:1234:1234
