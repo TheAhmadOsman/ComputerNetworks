@@ -31,12 +31,7 @@ TTL_SEC = {
     }
 
 
-def val_to_2_bytes(value: int) -> list:
-    '''Split a value into 2 bytes'''
-    raise NotImplementedError
-
-
-def val_to_n_bytes(value: int, n_bytes: int) -> list:
+def val_to_bytes(value: int, n_bytes: int) -> list:
     '''Split a value into n bytes'''
     raise NotImplementedError
 
@@ -46,13 +41,13 @@ def bytes_to_val(bytes_lst: list) -> int:
     raise NotImplementedError
 
 
-def get_2_bits(bytes_lst: list) -> int:
-    '''Extract first two bits of a two-byte sequence'''
+def get_left_bits(bytes_lst: list, n_bits: int) -> int:
+    '''Extract left n bits of a two-byte sequence'''
     raise NotImplementedError
 
 
-def get_offset(bytes_lst: list) -> int:
-    '''Extract 14 rightmost bits from a two-byte sequence'''
+def get_right_bits(bytes_lst: list, n_bits) -> int:
+    '''Extract right n bits bits of a two-byte sequence'''
     raise NotImplementedError
 
 

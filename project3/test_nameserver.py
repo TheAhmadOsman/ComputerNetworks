@@ -6,11 +6,10 @@ Testing the DNS Server
 
 from random import seed
 import pytest
-from nameserver import val_to_2_bytes
-from nameserver import val_to_n_bytes
+from nameserver import val_to_bytes
 from nameserver import bytes_to_val
-from nameserver import get_2_bits
-from nameserver import get_offset
+from nameserver import get_left_bits
+from nameserver import get_right_bits
 from nameserver import read_zone_file
 from nameserver import parse_request
 from nameserver import format_response
@@ -27,21 +26,24 @@ class TestServer:
         self.zone = read_zone_file('zoo.zone')[1]
 
     def test_val_to_bytes(self):
-        '''Convert a value to 2 bytes'''
-        assert val_to_2_bytes(43043) == [168, 35]
-        assert val_to_n_bytes(430430, 3) == [6, 145, 94]
+        '''Convert a value to bytes'''
+        assert val_to_bytes(43043, 2) == [168, 35]
+        assert val_to_bytes(430430, 3) == [6, 145, 94]
 
     def test_bytes_to_val(self):
-        '''Convert a value to n bytes'''
+        '''Convert bytes to a value'''
+        assert bytes_to_val([145, 94]) == 37214
         assert bytes_to_val([6, 145, 94]) == 430430
 
-    def test_get_2_bits(self):
-        '''Get 2 bits'''
-        assert get_2_bits([200, 100]) == 3
+    def test_get_left_bits(self):
+        '''Get left bits'''
+        assert get_left_bits([200, 100], 2) == 3
+        assert get_left_bits([200, 100], 4) == 12
 
-    def test_get_offset(self):
-        '''Get offset'''
-        assert get_offset([200, 100]) == 2148
+    def test_get_right_bits(self):
+        '''Get right bits'''
+        assert get_right_bits([200, 100], 14) == 2148
+        assert get_right_bits([200, 100], 6) == 36
 
     def test_read_zone_file(self):
         '''Read the zone file'''
