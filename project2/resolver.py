@@ -75,7 +75,8 @@ def parse_cli_query(filename, q_type, q_domain, q_server=None) -> tuple:
 def format_query(q_type: int, q_domain: list) -> bytearray:
     '''Format DNS query'''
     '''
-    0100 
+    Head is always 12 bytes - Query, message size of varying size ending with 00 - Answers
+    0100 -> request flag or 8180 for response flag
     ID: An arbitrary 16 bit request identifier. The same ID is used in the response to the query so we can match them up. Let’s go with AA AA.
 
     QR: A 1 bit flag specifying whether this message is a query (0) or a response (1). As we’re sending a query, we’ll set this bit to 0.
@@ -95,7 +96,7 @@ def format_query(q_type: int, q_domain: list) -> bytearray:
     '''
         assert format_query(1, ['luther', 'edu']) == b'OB\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x06luther\x03edu\x00\x00\x01\x00\x01'
     '''
-    # 
+    # OB is transaction id - convert each of those characters including space back into hexadecimal
     raise NotImplementedError
 
 
@@ -111,6 +112,19 @@ def send_request(q_message: bytearray, q_server: str) -> bytes:
 
 def parse_response(resp_bytes: bytes):
     '''Parse server response'''
+    '''
+        c00c means go back to the query since we received a label and we want to know our domain name.
+        Extract 
+        2bytes
+
+        The tuple sends back 4bytes of time to live in the middle in seconds
+
+        Your answe starts at the offset, 12 bytes for the DNS Header, whatever for query, and then the answer in the offset.
+
+        Two offsets:
+
+        The offset starts with 11 C0
+    '''
     raise NotImplementedError
 
 
