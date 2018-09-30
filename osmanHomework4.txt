@@ -1,0 +1,12 @@
+Answer the following questions and submit your answers as a single file (txt, rtf, docx, or pdf). Explain your answers by using specific values (and their location) from the captured frame.
+
+1-What is the sender's MAC address?
+2-What Network layer protocol is used?
+3-What is the sender's Network address?
+4-What Transport layer protocol is used?
+5-What is the size of the transport layer datagram/segment?
+6-What Application layer protocol is used?
+7-Is it a request or response?
+8-What kind of request is this? What was the question?
+9-What kind of response is this? Does it answer the question? How many answers are there?
+10-Provide any additional details about the frame and its content.
