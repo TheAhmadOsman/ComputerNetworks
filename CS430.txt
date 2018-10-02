@@ -145,3 +145,11 @@ to extract three bits from 10101110
                     do & on.    110
 
 extract the left ones, you do a shift after the and operator
+
+----------------------
+
+IPV6: '{:04x}'.format(0x2001)
+':'.join()
+
+-----------------------
+
