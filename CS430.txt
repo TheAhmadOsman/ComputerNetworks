@@ -153,3 +153,22 @@ IPV6: '{:04x}'.format(0x2001)
 
 -----------------------
 
+ARP -> Address Resolution Protocol, works at the local level to resolve IPv4 to an ethernet, MAC, address.
+DNS -> Domain Name System, takes domain name and resolves that into IP
+FTP -> File Transfer Protocol, files over TCP(Transmission Control Protocal)
+HTTP -> Web Documents, over TCP
+HTTPs -> Web Documents, Securely, over TCP
+ICMP -> Send and receive network control messages => ICMP Internet Control Message Protocol -> Belongs to the Network Layer Level
+IMAP -> Manipulates emails on the server
+POP3 -> Reterival
+SMTP -> Sending - also it is used in transfering emails between the servers
+TFTP, Trivial File Transfer Protocol -> Transfer large files over the UDP
+
+-----------------------
+
+Exam
+    Package Analysis - True or False - WHy?
+    Understand DNS Message Format
+
+-----------------------
+
