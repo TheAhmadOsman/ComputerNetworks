@@ -10,13 +10,14 @@ from resolver import val_to_2_bytes
 from resolver import val_to_n_bytes
 from resolver import bytes_to_val
 from resolver import get_2_bits
-from resolver import get_offset
+from resolver import get_domain_name_location
 from resolver import parse_cli_query
 from resolver import format_query
 from resolver import parse_response
 from resolver import parse_answers
 from resolver import parse_address_a
 from resolver import parse_address_aaaa
+from resolver import PUBLIC_DNS_SERVER
 
 seed(430)
 
@@ -35,22 +36,30 @@ class TestResolver:
         assert val_to_n_bytes(430430, 3) == [6, 145, 94]
 
     def test_bytes_to_val(self):
-        '''Convert a value to n bytes'''
+        '''Convert list of bytes to a value'''
         assert bytes_to_val([6, 145, 94]) == 430430
 
     def test_get_2_bits(self):
         '''Get 2 bits'''
         assert get_2_bits([200, 100]) == 3
 
-    def test_get_offset(self):
-        '''Get offset'''
-        assert get_offset([200, 100]) == 2148
+    def test_get_domain_name_location(self):
+        '''Get domain name location'''
+        assert get_domain_name_location([200, 100]) == 2148
 
     def test_parse_cli_query(self):
         '''Parse command-line arguments'''
-        assert parse_cli_query('resolver.py', 'A', 'luther.edu') == (1, ['luther', 'edu'], '8.26.56.26')
+        # assert parse_cli_query('resolver.py', 'A', 'luther.edu') == (1, ['luther', 'edu'], '8.26.56.26')
+        cli_query = parse_cli_query('resolver.py', 'A', 'luther.edu')
+        assert cli_query[0] == 1
+        assert cli_query[1] == ['luther', 'edu']
+        assert cli_query[2] in PUBLIC_DNS_SERVER
         assert parse_cli_query('resolver.py', 'A', 'luther.edu', '1.0.0.1') == (1, ['luther', 'edu'], '1.0.0.1')
-        assert parse_cli_query('resolver.py', 'AAAA', 'luther.edu') == (28, ['luther', 'edu'], '8.8.4.4')
+        # assert parse_cli_query('resolver.py', 'AAAA', 'luther.edu') == (28, ['luther', 'edu'], '8.8.4.4')
+        cli_query = parse_cli_query('resolver.py', 'AAAA', 'luther.edu')
+        assert cli_query[0] == 28
+        assert cli_query[1] == ['luther', 'edu']
+        assert cli_query[2] in PUBLIC_DNS_SERVER
         with pytest.raises(ValueError) as excinfo:
             parse_cli_query('resolver.py', 'MX', 'luther.edu')
         exception_msg = excinfo.value.args[0]
@@ -66,6 +75,22 @@ class TestResolver:
                               b'\x00\x01\xc0\x0c\x00\x01\x00\x01\x00\x00\x01,\x00\x04\xae\x81\x19\xaa') == \
                               [('luther.edu', 300, '174.129.25.170')]
 
+        assert parse_response(b'r\xd4\x81\x80\x00\x01\x00\x06\x00\x00\x00\x00\x05yahoo\x03com' +
+                              b'\x00\x00\x01\x00\x01\x05yahoo\x03com\x00\x00\x01\x00\x01\x00\x00' +
+                              b'\x00\x05\x00\x04b\x89\xf6\x07\x05yahoo\x03com\x00\x00\x01\x00\x01' +
+                              b'\x00\x00\x00\x05\x00\x04H\x1e#\t\x05yahoo\x03com\x00\x00\x01\x00' +
+                              b'\x01\x00\x00\x00\x05\x00\x04H\x1e#\n\x05yahoo\x03com\x00\x00\x01' +
+                              b'\x00\x01\x00\x00\x00\x05\x00\x04b\x8a\xdb\xe7\x05yahoo\x03com\x00' +
+                              b'\x00\x01\x00\x01\x00\x00\x00\x05\x00\x04b\x89\xf6\x08\x05yahoo\x03com' +
+                              b'\x00\x00\x01\x00\x01\x00\x00\x00\x05\x00\x04b\x8a\xdb\xe8') == \
+                              [
+                                  ('yahoo.com', 5, '98.137.246.7'),
+                                  ('yahoo.com', 5, '72.30.35.9'),
+                                  ('yahoo.com', 5, '72.30.35.10'),
+                                  ('yahoo.com', 5, '98.138.219.231'),
+                                  ('yahoo.com', 5, '98.137.246.8'),
+                                  ('yahoo.com', 5, '98.138.219.232')
+                              ]
         assert parse_response(b'k\xfb\x81\x80\x00\x01\x00\x06\x00\x00\x00\x00\x05yahoo\x03com' +
                               b'\x00\x00\x1c\x00\x01\xc0\x0c\x00\x1c\x00\x01\x00\x00\x04T\x00\x10 ' +
                               b'\x01I\x98\x00X\x186\x00\x00\x00\x00\x00\x00\x00\x11\xc0\x0c\x00\x1c' +
