@@ -174,3 +174,40 @@ Exam
 
 UOP  MSG Size
 
+-----------------------
+
+Homework 5
+
+Look at the picture
+
+python3
+    chk_pseudo = 0x7f00 + 0x0001 + 0x7f00 + 0x0001 + 0x0011 + 0x000c + 
+    hex(chk_pseudo)
+    OUTPUT: 0xfe1f
+
+That is what we Wireshark gives due to UDP checksum offload
+
+    chk_udp = 0xd173 + 0x10cc + 0x000c + 0x0000
+    hex(chk_udp)
+    OUTPUT: 0xe24b
+
+    chk_data = 0x546f + 0x676f
+    hex(chk_data)
+    OUTPUT: 0xbbde
+
+    chk_full = chk_pseudo + chk_udp + chk_data
+    hex(chk_full)
+    
+    bin(chk_full)
+
+pictures for dealing with the overflow of the binary values and then doing ones compliment
+
+the bin representation, has two more extra bits, you take however many on the left of extra bits, and add them to the right most sixten bits, and then do the ones compliment.
+
+the CHKSUM 2 bytes in wireshark have to be zerod out
+
+Datagram = UDP + Data
+
+The chksum happens on multiple levels because there are multiple sources of errors, including losing data at the wires level, which is why the chksum happens at the Ethernet level, howver, it is not perfect. IPV4 checks for the header chksum and leaves the rest for the transportation layer, and in IPv6 it was removed and left for the transportation layer. Ethernet is very old, and at the same time it is quite fast, so we are not losing anything by leaving it here. Between checksum over ethernet and over the transportation layer, we know we will catch any errors.
+
+QUIC: google QUIC cloudfare
