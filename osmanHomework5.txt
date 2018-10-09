@@ -17,7 +17,7 @@
 
 
 5-What do you think of QUIC? What problems does it solve? What are its advantages over traditional protocols?
-
+    QUIC, a recently developed transportation protocol by Google, is an improvement over TCP. One of its main features is the acceleration of HTTP traffic while at the same time being more secure than TCP. To put in simpler words, QUIC is far more secure than TCP while being faster than TCP as well. QUIC does not require multiple connections, like TCP, because of the multiplexing exchanges. Looking at the improvements to speed and security, QUIC has major advantages when compared to traditional protocols.
 
 
 For questions 6-10 consider the following packet and read UDP Checksum HowTo. Note that first row (00-0F) and first column (0000-0040) are not part of the packet data.
@@ -126,4 +126,4 @@ For questions 6-10 consider the following packet and read UDP Checksum HowTo. No
     Converting to Hexadecimal:
         4845
 
-    The calculated checksum is: 4845
+    The calculated checksum is: 0x4845
