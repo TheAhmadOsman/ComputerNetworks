@@ -211,3 +211,49 @@ Datagram = UDP + Data
 The chksum happens on multiple levels because there are multiple sources of errors, including losing data at the wires level, which is why the chksum happens at the Ethernet level, howver, it is not perfect. IPV4 checks for the header chksum and leaves the rest for the transportation layer, and in IPv6 it was removed and left for the transportation layer. Ethernet is very old, and at the same time it is quite fast, so we are not losing anything by leaving it here. Between checksum over ethernet and over the transportation layer, we know we will catch any errors.
 
 QUIC: google QUIC cloudfare
+
+------------------------------------
+
+UDP - 8 Bytes
+TCP - 20 Bytes
+IPv4 - 20 Bytes
+IPv6 - 40 Bytes
+Ethernet - 14 Bytes
+
+Frame = Ethernet + IP + UDP(transportation) + MSG
+IP = IP + UDP(transportation) + MSG
+Dataframe -> UDP(transportation) = UDP(transportation) + MSG
+MSG = MSG
+
+------------------------------------
+
+The use of & | ^ << >>
+
+Between ifconfig and ip, ip is more powerful - between nslookup and dig, dig is more powerful and important!
+
+ipconfig, ping, nslookup
+
+those are enough tools for networking: ip - mtr - dig - netstat
+
+mtr -> a specfic route to other routers
+
+netstats -> open ports on your machine
+
+arp -> 
+
+------------------------------------
+
+What type of delays do we have?
+    Congestion - Probogtational - Distance
+    Transmission delays -> how fast can the ethernet device move data
+
+    The answer for calculating delays should be in seconds.
+
+    Kilobps -> 10^3
+    Megabps -> 10^6
+    Gigabps -> 10^9
+    Terabps -> 10^12
+
+    10 mbps to convert to bits should be done with 10 to the power of 6.
+
+    throughput -> bits/seconds to calculate
