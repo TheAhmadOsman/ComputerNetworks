@@ -305,25 +305,42 @@ def parse_answers(resp_bytes: bytes, offset: int, rr_ans: int) -> list:
     domain_name = '.'.join([domain_pt1, domain_pt2])
 
     answers = []
+    # if it is labeled...
+    if offset == -1:
+        '''
+        x05yahoo\x03com\x00\x00\x01\x00\x01\x00\x00' +
+                              b'\x00\x05\x00\x04b\x89\xf6\x07\x05yahoo
+        '''
+        before, offset, after = resp_bytes.partition(bytes(domain_pt2, 'utf-8'))
+        resp_bytes = after
+        for answer in range(rr_ans):
+            before, offset, after = resp_bytes.partition(bytes(domain_pt2, 'utf-8'))
+            resp_bytes = after
+            print(after)
+            ttl = int(after[5:9].hex(), 16)
+            addr_length = int(after[9:11].hex(), 16)
+            ip = ""
+            if addr_length == 4:
+                ip = parse_address_a(4, after[11:11+addr_length])
+            elif addr_length == 16:
+                ip = parse_address_aaaa(16, after[11:11+addr_length])
 
-    for answer in range(rr_ans):
-        before, offset, after = resp_bytes.partition(b'\xc0\x0c')
-        ttl = int(after[4:8].hex(), 16)
-        addr_length = int(after[8:10].hex(), 16)
-        ip = ""
-        if addr_length == 4:
-            ip = parse_address_a(4, after[10:10+addr_length])
-        elif addr_length == 16:
-            ip = parse_address_aaaa(16, after[10:10+addr_length])
+            answers.append((domain_name, ttl, ip))
+    else:
+        for answer in range(rr_ans):
+            before, offset, after = resp_bytes.partition(b'\xc0\x0c')
+            resp_bytes = after
+            ttl = int(after[4:8].hex(), 16)
+            addr_length = int(after[8:10].hex(), 16)
+            ip = ""
+            if addr_length == 4:
+                ip = parse_address_a(4, after[10:10+addr_length])
+            elif addr_length == 16:
+                ip = parse_address_aaaa(16, after[10:10+addr_length])
 
-        answers.append((domain_name, ttl, ip))
+            answers.append((domain_name, ttl, ip))
 
     return answers
-
-
-"""         else:
-            raise TypeError("Type is not supported!")
- """        # 10:10+addr_length
 
 
 def parse_address_a(addr_len: int, addr_bytes: bytes) -> str:
@@ -352,7 +369,7 @@ def parse_address_aaaa(addr_len: int, addr_bytes: bytes) -> str:
 
     lst = []
     for i in range(0, addr_len-1, 2):
-        value = addr_bytes[i:i+2].hex().strip("0")
+        value = addr_bytes[i:i+2].hex().lstrip("0")
         lst.append(value)
 
     for i, value in enumerate(lst):
