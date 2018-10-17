@@ -123,11 +123,44 @@ def parse_request(origin: str, msg_req: bytes) -> tuple:
                                             |------------------query----------------------|
     '''
 
-    raise NotImplementedError
+    '''
+        assert parse_request('cs430.luther.edu', b'6\xc3\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01') == \
+        (14019, 'ant', 1, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01')
+
+        assert parse_request('cs430.luther.edu', b'i\xce\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x03ant\x05cs430\x06luther\x03edu\x00\x00\x1c\x00\x01') == \
+        (27086, 'ant', 28, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x1c\x00\x01')
+    '''
+
+    transaction_id = int(msg_req[0:2].hex(), 16)
+    domain_start = msg_req[12]
+    domain = msg_req[13:13+domain_start].decode("utf-8")
+    
+    origin_file, _ = read_zone_file('zoo.zone')
+    if origin != origin_file:
+        raise ValueError("Unknown zone") 
+    
+    query_type = int(msg_req[-4:-2].hex(), 16)
+    if query_type not in [1, 28]:
+        raise ValueError('Unknown query type')
+    query = msg_req[12:]
+
+    clas = int(msg_req[-2:].hex(), 16)
+    if clas != 1:
+        raise ValueError("Unknown class")
+
+    print((transaction_id, domain, query_type, query))
+    return (transaction_id, domain, query_type, query)
 
 
 def format_response(zone: dict, trans_id: int, qry_name: str, qry_type: int, qry: bytearray) -> bytearray:
     '''Format the response'''
+
+
+    '''
+        (self.zone, 4783, 'ant', 1, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01') == \
+        b'\x12\xaf\x81\x00\x00\x01\x00\x02\x00\x00\x00\x00\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01\xc0\x0c\x00\x01\x00\x01\x00\x00\x0e\x10\x00\x04\xb9T\xe0Y\xc0\x0c\x00\x01\x00\x01\x00\x00\x0e\x10\x00\x04\xc7SC\x9e'
+    '''
+
     raise NotImplementedError
 
 
