@@ -23,7 +23,7 @@ class TestServer:
     @pytest.fixture(scope='function', autouse=True)
     def setup_class(self):
         '''Setting up'''
-        self.zone = read_zone_file('zoo.zone')[1]
+        #self.zone = read_zone_file('zoo.zone')[1]
 
     def test_val_to_bytes(self):
         '''Convert a value to bytes'''
