@@ -6,7 +6,6 @@ DNS Name Server
 import sys
 from random import randint, choice
 from socket import socket, SOCK_DGRAM, AF_INET
-import re
 
 
 HOST = "localhost"
@@ -155,13 +154,69 @@ def parse_request(origin: str, msg_req: bytes) -> tuple:
 def format_response(zone: dict, trans_id: int, qry_name: str, qry_type: int, qry: bytearray) -> bytearray:
     '''Format the response'''
 
+    '''
+        format_response takes the zone dictionary, transaction_id, domain name, and the query. It formats the DNS response (bytearray) based on those values and returns it to the calling function. Your should either label or pointer to format the domain name.
+    '''
 
     '''
-        (self.zone, 4783, 'ant', 1, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01') == \
+        assert format_response(self.zone, 4783, 'ant', 1, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01') == \
         b'\x12\xaf\x81\x00\x00\x01\x00\x02\x00\x00\x00\x00\x03ant\x05cs430\x06luther\x03edu\x00\x00\x01\x00\x01\xc0\x0c\x00\x01\x00\x01\x00\x00\x0e\x10\x00\x04\xb9T\xe0Y\xc0\x0c\x00\x01\x00\x01\x00\x00\x0e\x10\x00\x04\xc7SC\x9e'
+
+        assert format_response(self.zone, 55933, 'ant', 28, b'\x03ant\x05cs430\x06luther\x03edu\x00\x00\x1c\x00\x01') == \
+            b'\xda}\x81\x00\x00\x01\x00\x01\x00\x00\x00\x00\x03ant\x05cs430\x06luther\x03edu\x00\x00\x1c\x00\x01\xc0\x0c\x00\x1c\x00\x01\x00\x00\x0e\x10\x00\x10J\x9ap\xec:\xc0\xc6\x845\x9e\x8d7\x94\x86YY'
+    '''
+    
+    formatted_response = bytearray()
+    
+    trans_id_bytes = val_to_bytes(trans_id, 2)
+    formatted_response.extend(trans_id_bytes)
+
+    flag_bytes = b'\x81\x00'
+    formatted_response.extend(flag_bytes)
+    
+    answers = zone[qry_name]
+    num_of_answers = 0
+    type_answers = []
+    for answer in answers:
+        if answer[2] == DNS_TYPES[qry_type]:
+            type_answers.append(answer)
+            num_of_answers += 1
+
+    other1 = b'\x00\x01'
+    formatted_response.extend(other1)
+    other2 = val_to_bytes(num_of_answers, 2)
+    formatted_response.extend(other2)
+    other3 = b'\x00\x00\x00\x00'
+    formatted_response.extend(other3)
+
+    formatted_response.extend(qry)
+
+    '''
+        c0 0c 00 01 00 01 00 00 00 05 00 04 ae 81 19 aa
+        |---| |---| |---| |---------| |---| |---------|
+        |ptr| |typ| |cls| | ttl     | |len| | address |
+
+        {domain: [(ttl, class, type, address)]}
     '''
 
-    raise NotImplementedError
+    for answer in type_answers:
+        formatted_response.extend(b'\xc0\x0c')
+        formatted_response.extend(val_to_bytes(qry_type, 2))
+        formatted_response.extend(b'\x00\x01')
+        formatted_response.extend(val_to_bytes(answer[0], 4))
+        if qry_type == 28:
+            formatted_response.extend(val_to_bytes(16, 2))
+            for part in answer[3].split(':'):
+                print(part)
+                formatted_response.extend(val_to_bytes(int(part, 16), 2))
+        elif qry_type == 1:
+            formatted_response.extend(val_to_bytes(4, 2))
+            for part in answer[3].split('.'):
+                formatted_response.extend(val_to_bytes(int(part), 1))
+        else:
+            raise ValueError('Unknown query type')
+
+    return formatted_response
 
 
 def run(filename: str) -> None:
