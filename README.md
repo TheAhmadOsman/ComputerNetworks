@@ -28,6 +28,60 @@ python3 nameserver.py zoo.zone
 python3 -m pytest test_nameserver.py
 ```
 
+8. Use your `resolver.py` or `nslookup` to resolve some somain name from the zone file. Note that you need to connect to port **43053** on your **localhost**.
+
+
+## Usage example
+
+Using `resolver.py` to resolve type **A** address.
+
+```
+> python3 resolver.py A ant.cs430.luther.edu 127.0.0.1
+DNS server used: 127.0.0.1
+Domain: ant.cs430.luther.edu
+TTL: 3600
+Address: 185.84.224.89
+Domain: ant.cs430.luther.edu
+TTL: 3600
+Address: 199.83.67.158
+```
+
+Using `resolver.py` to resolve type **AAAA** address.
+
+```
+python3 resolver.py AAAA ant.cs430.luther.edu 127.0.0.1
+DNS server used: 127.0.0.1
+Domain: ant.cs430.luther.edu
+TTL: 3600
+Address: 4a9a:70ec:3ac0:c684:359e:8d37:9486:5959
+```
+
+Using `nslookup` to resolve type **A** address.
+
+```
+> nslookup -port=43053 -type=A ant.cs430.luther.edu 127.0.0.1
+Server:		127.0.0.1
+Address:	127.0.0.1#43053
+
+Non-authoritative answer:
+Name:	ant.cs430.luther.edu
+Address: 185.84.224.89
+Name:	ant.cs430.luther.edu
+Address: 199.83.67.158
+```
+
+Using `nslookup` to resolve type **AAAA** address.
+
+```
+> nslookup -port=43053 -type=AAAA ant.cs430.luther.edu 127.0.0.1
+Server:		127.0.0.1
+Address:	127.0.0.1#43053
+
+Non-authoritative answer:
+Name:	ant.cs430.luther.edu
+Address: 4a9a:70ec:3ac0:c684:359e:8d37:9486:5959
+```
+
 ## Approach
 
 * Look at a valid DNS response (eg. ping www.luther.edu and capture the traffic)
