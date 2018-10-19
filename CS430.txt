@@ -257,3 +257,15 @@ What type of delays do we have?
     10 mbps to convert to bits should be done with 10 to the power of 6.
 
     throughput -> bits/seconds to calculate
+
+TCP and UDP do not do error correction, but rather error detection, using the checksum, and it can try to figure it out. Retransmition for TCP is not error correction.
+
+hello2e104
+
+2 for number of vowels, 1 and 4 for their indices, and then error detection try to fix them.
+
+For the three-way handshake, the third message can combine data too with it!
+
+If only the three-way handshake happen and nothing else being sent, the server is gonna wait for a abit until timeout. This is how an attack can happen, exhaust the network with a lot of three-way handsahake and exhaust the machine with bogus requests.
+
+At the transportation layer, all the packets or segments are over the same zie, 64kilobytes, despite how much the application is sending. So 64kb, gets sent. That is what the timeout considers, and timeout depends also on the distance, the history of transmissions, etc...
