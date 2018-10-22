@@ -269,3 +269,21 @@ For the three-way handshake, the third message can combine data too with it!
 If only the three-way handshake happen and nothing else being sent, the server is gonna wait for a abit until timeout. This is how an attack can happen, exhaust the network with a lot of three-way handsahake and exhaust the machine with bogus requests.
 
 At the transportation layer, all the packets or segments are over the same zie, 64kilobytes, despite how much the application is sending. So 64kb, gets sent. That is what the timeout considers, and timeout depends also on the distance, the history of transmissions, etc...
+
+----
+Exam will be on packet analysis and calculations. -> Mostly what we did on Homework 5.
+----
+
+To transmit data reliability and quickly, we divide the data into larger chunks of packets, send one chunk, and see if that got sent, if not we resent. Round-trip-time is what we look at here, we're trying to minimize that. This is not so great because if this large chunk of packets gets lost or needed to be retransmitted, then we're actually losing on the efficiency part here.
+
+However, we still do it that way, and we have an assumption that we won't face a problem, however, if some problem occurs, we'll see how to solve it. Pipelining is the name of this. How we fix this, is the point of TCP and other reliable protocols to answer.
+
+Mutliple packets are being sent over the same connection.
+
+So we do packets into chunks, and then do pipelining to send multiple chunks at the same time. If a chunk in between gets lost, like in my "humiliating" exercise, everything from and beyond that lost chunk will be retransmitted. The order will be depend on "sequence number", starting with 0 or 1 and up to whatever needs to be transmitted.
+
+One of the problems of pipelining is, if one packet is delayed, ten packets can be retransmitted.
+
+Know the difference, for yourself, For Fragmentation, Segementation, P2P data division on Application Layer.
+
+Pipelining works with timeouts for each packet.
