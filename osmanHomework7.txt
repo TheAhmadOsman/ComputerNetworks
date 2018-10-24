@@ -1,0 +1,19 @@
+1-What is the IP address and the port number used by the client? Is the client downloading or uploading data? (Hint: look for the amount of data that that flows in either direction)
+
+2-What is the content of the file in transit?
+
+3-What are the relative and real sequence numbers in the SYN/ACK segment sent by the server? (Hint: read TCP_Relative_Sequence_Numbers - The Wireshark Wiki to display real, not relative sequence numbers)
+
+4-What HTTP method is the client using? Look for HTTP messages containing either GET or POST method.
+
+5-What is the throughput (bytes transferred per unit time) for the TCP connection? Explain how you calculated this value.
+
+6-Was this connection properly closed by the client?
+
+7-What is the minimum amount of available buffer space advertised at the received for the entire trace? Does the lack of receiver buffer space ever throttle the sender?
+
+8-Many packets from the server have some random padding added at the end (## 6, 9, 12 etc.) Why packets need to be at least 60 bytes long?
+
+9-Packets #3 and #206 are smaller than 60 bytes and yet not padded. Why is that?
+
+10-What is the indication that the file was transmitted successfully?
