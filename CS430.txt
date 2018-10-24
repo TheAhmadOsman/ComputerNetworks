@@ -287,3 +287,39 @@ One of the problems of pipelining is, if one packet is delayed, ten packets can 
 Know the difference, for yourself, For Fragmentation, Segementation, P2P data division on Application Layer.
 
 Pipelining works with timeouts for each packet.
+
+Why do we use TCP instead of UDP? What errors do TCP fix? UDP does not do retransmission. The retransmission happening on the DNS layer, in case of failure, happened on the Application layer, so UDP did not do the retransmissions for us. 
+TCP takes care of retransmissions for us, it also makes sure that all packets flow smoothly, that the sender and the receiver agree on a certain speed so the client and the server do not overflow each other; flow control. TCP takes care of the three-way handshake. 
+TCP is very convenient for the Applications, it is complicated, but makes it convenient. 
+
+TCP 
+    Point-to-point: process to process communication, not one-to-many.
+    Reliable byte stream: retransmissions.
+    TCP is pipeline: multiple data chunks bein sent
+    Full duplex: both client and server can send and receive data.
+    Connection-oriented: three-way handshake, unlike UDP
+    Flow control: the client and the server deciding the speed and it is a way to slow down the other party. The receiver cannot process data that fast, so it is slowing the sender.
+    Congestion control: There is a problem in the netowork, so an intermiedate, probably the router, will slow down the sender.
+    Both Congestion control and Flow control will slow the sender speed.
+
+App is responsible for the Application Layer
+OS is responsible for Transmission and Network Layer
+Driver is response for the Ethernet(NIC: Network Interface Card) layer
+
+Ask Dr. Roman about large TCP pagckets again 
+
+In packet analysis, to know if a file is being downloaded or uploaded, look at POST and GET, or see who is acknowlging, if the server is acknowlging, then you are uploading.
+
+Alice in the Wonderland
+
+Read about Syn -> Ack, Syn -> Ack -> DATA, DATA, DATA...
+
+Relative sequence number starts from 0, while the real sequence number is a random number that is randomly generated between the sender and receiver. You can uncheck the relative one in the preference and add a column. You can figure out the real number by looking at the bytes in the wireshark.
+
+The random sequence number is chosen so that each session is taken care of. Because if two sessions start at 0, and both are stoped at ten, and then packet eleven is sent, which session is that?
+
+Calculating throughput can be done by adding length and then dividing by the time of the last http packet(the last meaningful packet): total bytes / time.
+
+It was not closed properly. Look at a FIN packet.
+
+200 Response code, the file was transmitted successfully. 
