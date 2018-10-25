@@ -1,19 +1,43 @@
 1-What is the IP address and the port number used by the client? Is the client downloading or uploading data? (Hint: look for the amount of data that that flows in either direction)
+    IP Address: 192.168.1.102
+    Source Port: 1161
+    The client is uploading as the destination is only sending acknowledgements back.
+
 
 2-What is the content of the file in transit?
+    The content of the file is Alice in Wonderland
+    File name is "alice.txt"
+
 
 3-What are the relative and real sequence numbers in the SYN/ACK segment sent by the server? (Hint: read TCP_Relative_Sequence_Numbers - The Wireshark Wiki to display real, not relative sequence numbers)
+    The relative sequence number is: 0
+    The real sequence number is: 883061785
+
 
 4-What HTTP method is the client using? Look for HTTP messages containing either GET or POST method.
+    The client is using POST. Packet number 4, sent by the client, has a POST method.
+
 
 5-What is the throughput (bytes transferred per unit time) for the TCP connection? Explain how you calculated this value.
+    By looking at the Conversions tool from the Statistics menu, there are 176k bytes that get transmitted in 5.6511 seconds. Calculating throughput can be done by adding length and then dividing by the time of the last meaningful packet: total bytes / time.
+        176000 / 5.6511 = 31144.379 bytes per second
+
 
 6-Was this connection properly closed by the client?
+    By looking at the expression: tcp.flags.fin eq 1, the connection was not closed properly.
+
 
 7-What is the minimum amount of available buffer space advertised at the received for the entire trace? Does the lack of receiver buffer space ever throttle the sender?
+    At packet number 2, the minimum amount of available buffer space advertised by the receiver was found with a size of 5840. The sender is never throttled as there little to no time gaps between packets transmitted, and the windows is always larger than the data sent. Also, the window is never exceeded by the sender. 
+
 
 8-Many packets from the server have some random padding added at the end (## 6, 9, 12 etc.) Why packets need to be at least 60 bytes long?
+    The standard minimum Ethernet frame is of size 64 bytes, and since the FCS adds extra 4 bytes upons sending, then 60 bytes is the smallest acceptable packet size.
+
 
 9-Packets #3 and #206 are smaller than 60 bytes and yet not padded. Why is that?
+    Packets, created by the sending machine we are capturing from(your machine, Dr. Roman), are not padded until right before transmission takes place, and wireshark grabs those packets for us before transmission. When those packets are sent, they will be at least 60 bytes in size. Right now, they have not been padded because they were captured by Wireshark before transmission.
+
 
 10-What is the indication that the file was transmitted successfully?
+    At packet #203, a 200 response code can be found, indicating that the file was transmitted successfully.
