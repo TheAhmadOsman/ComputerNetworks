@@ -323,3 +323,10 @@ Calculating throughput can be done by adding length and then dividing by the tim
 It was not closed properly. Look at a FIN packet.
 
 200 Response code, the file was transmitted successfully. 
+
+----
+
+UDP, TCP, and DNS headers for exam
+
+Ask Dr. Roman about checksum calculation.
+
