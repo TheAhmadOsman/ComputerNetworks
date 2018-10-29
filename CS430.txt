@@ -328,5 +328,34 @@ It was not closed properly. Look at a FIN packet.
 
 UDP, TCP, and DNS headers for exam
 
-Ask Dr. Roman about checksum calculation.
+Ask Dr. Roman about checksum calculation. Also the state.
 
+----
+
+TCP Reno is the version we care about
+
+Congestion Control on TCP
+
+Congestion Control is the thing that differentiate between UDP and TCP
+
+We have Flow Control and Congestion Control
+
+Flow Control is the receiver to tell the sender to slow down -> Mason telling Roman to slow down because he is taking notes
+Congestion Control is the ability of the sender to figure that the data is not getting received -> Roman slowing down because he is figuring people are are kinda of getting lost
+
+How can the sender limit the traffic rate?
+    Increase time between packets -> send fewer packets per time unit
+
+How can sender perceivee there is congestion?
+    Congestion Indicators
+        Timeout
+        3 duplicate acks
+
+    There is too much data for a router to process and the router will have a limitted buffer to process and if the amount of packets exceeded that buffer, we will drop them. The router has a queue buffer. Think about "is on friday" packets message, where you will ask for what is on friday, three times as three words were received, and then once you have what is on friday, you do not ask for "is on friday" again but rather what is after.
+    Also, a packet is dropped if the packet is corrupted. 
+
+Solutions to Congestion Control
+    Slow Start
+    Congestion avoidance
+
+Reno and Taheo will both go down to one segment in case of timeout
