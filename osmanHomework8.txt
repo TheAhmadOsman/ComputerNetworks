@@ -1,0 +1,29 @@
+1-Suppose Host A sends two sequential TCP segments to Host B over TCP. Sequence number of the first segment is 430, its size is 30 bytes. What is the sequence number of the second segment?
+
+
+2-Suppose Host A sends two sequential TCP segments to Host B over TCP. Sequence number of the first segment is 430, its size is 30 bytes. First packet is lost, but the second is delivered successfully. What is the acknowledgement number sent from Host B to Host A in the ACK message?
+
+3-Is TCP closer to the Go-Back-N or Selective Repeat algorithm? Explain your answer.
+
+
+4-Briefly explain the need for 3 (three) messages in the TCP handshake. Could we use fewer messages? Should we use more?
+
+
+5-What is the difference between TCP Reno and Tahoe? 
+
+
+6-Consider the following packet (part of a Telnet session). What are the expected sequence number and acknowledgment number in the response packet (sent from server to client)?
+
+
+7-What are the time intervals of TCP slow start?
+
+
+8-What causes window shrinkage after the 16th round?
+
+
+9-What causes window shrinkage after the 22nd round?
+
+
+10-During what transmission round is the 70th segment sent?
+
+
