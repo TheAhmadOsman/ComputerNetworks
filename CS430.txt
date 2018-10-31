@@ -359,3 +359,44 @@ Solutions to Congestion Control
     Congestion avoidance
 
 Reno and Taheo will both go down to one segment in case of timeout
+
+---------
+
+Calculations and Packet Analysis
+    Numbering Systems
+    UDP - TCP - DNS
+
+Base 5 to base 7 is base 5 to base 10 and base 10 to base 5
+
+2^16
+
+bits/second
+
+Throughput calculations
+Delays calculations
+
+The whole packet given, and then asks about some values.
+
+The values in the UDP/DNS header. Maybe TCP.
+
+Checksum of 4 Bytes
+    Four hexadecimal numbers
+        convert to binary
+        return to hexadecimal
+
+Hexadecimal to binary
+    Pictures
+
+A question about the states of the TCP
+    State Diagram of TCP
+
+Port numbers for matching questions
+    The services we have seen so far: the protocols are on the slides
+
+Wireshark screenshots in time and bytes for the throupput calculators
+
+In the networking world, its always a power of 10 -> Kbps = 1000 bits per second, Mbps = 1000000 bits per second
+
+Sequence number + number of bytes 
+
+Tools and their usages
