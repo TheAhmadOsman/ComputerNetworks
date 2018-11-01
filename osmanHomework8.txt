@@ -11,7 +11,7 @@
 
 
 4-Briefly explain the need for 3 (three) messages in the TCP handshake. Could we use fewer messages? Should we use more?
-    The three-way handshakes makes TCP a connection-oriented protocol. The number three, for the three-way handshake, was not chosen abruptly but rather to serve a purpose of having both the sender and the receiver synchronize and acknowledge each others Initial Sequence number, so we should not user fewer, and we should not use more because, unless we are transmitting data, the connection has been established and the SYN, SYN/ACK, and ACK process has been achieved by the three-way handshake.
+    The three-way handshakes makes TCP a connection-oriented protocol. The number three, for the three-way handshake, was not chosen abruptly but rather to serve a purpose of having both the sender and the receiver synchronize and acknowledge each others Initial Sequence number, so we should not user fewer, and we should not use more because, unless we are transmitting data, the connection has been established and the SYN, SYN/ACK, and ACK process has been achieved by this three-way handshake. I think this is the best way to establish connection, no more and no less of a handshake is needed.
 
 
 5-What is the difference between TCP Reno and Tahoe? 
@@ -19,7 +19,8 @@
 
 
 6-Consider the following packet (part of a Telnet session). What are the expected sequence number and acknowledgment number in the response packet (sent from server to client)?
-    3191800522
+    Seq: 4168689280
+    Ack: 3191800522
 
 
 7-What are the time intervals of TCP slow start?
@@ -31,7 +32,7 @@
 
 
 9-What causes window shrinkage after the 22nd round?
-    A timeout for Reno or a timeout/triple duplicate Acks for Tahoe.
+    A timeout.
 
 
 10-During what transmission round is the 70th segment sent?
