@@ -400,3 +400,19 @@ In the networking world, its always a power of 10 -> Kbps = 1000 bits per second
 Sequence number + number of bytes 
 
 Tools and their usages
+
+----------------
+
+The router has a very  simple decision of who to send this packet to
+    Called forwarding
+        Moving the packet within the router(from one input interface to another)
+            A router can be quite big with dozens of ports
+    This decision has to happen within nanoseconds or one, two microseconds at most
+        This includes the execution
+
+Routing algorithm
+
+THe data get queued in the router, and if there is congestion and timeout, packets will start getting dropped.
+
+IPv4: 2^32
+IPv6: 2^128
