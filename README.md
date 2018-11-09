@@ -6,7 +6,7 @@ For this project you are going to write a simple web server using Python sockets
 2. Serve a single file, *alice30.txt*.
 3. Log details of each incoming request to *webserver.log*.
 4. Return *405 Method Not Allowed* error for any method other than *GET*
-5. Return *404 Not Found* error for any request other than */alice.txt*.
+5. Return *404 Not Found* error for any request other than */alice30.txt*.
 6. Send the content of *alice30.txt* to the client along with proper response header.
 
 ## Request
@@ -76,6 +76,10 @@ Server: CS430-ROMAN
 
 ## References
 
+* [RFC 7231 - Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content](https://tools.ietf.org/html/rfc7231)
+
 * [Request header - MDN Web Docs Glossary: Definitions of Web-related terms | MDN](https://developer.mozilla.org/en-US/docs/Glossary/Request_header)
 
 * [Response header - MDN Web Docs Glossary: Definitions of Web-related terms | MDN](https://developer.mozilla.org/en-US/docs/Glossary/Response_header)
+
+* [Alice's Adventures in Wonderland](www.umich.edu/~umfandsf/other/ebooks/alice30.txt)
