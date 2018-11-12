@@ -26,7 +26,7 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
     with server:
         while True:
             conn, addr = server.accept()
-            print("Connection Opened...")
+            print("Connection Opened... Please close this client completely before using another one.")
             with conn:
                 while True:
                     data = conn.recv(1024)
@@ -54,6 +54,7 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                             " | " + quri  + " | " + str(addr[0]) + " | " + r_dct["User-Agent"] + '\n') 
 
                     # Checking for errors and encoding the sent data
+                    error = True
                     if qtype != request_type:
                         msg = "405 Method Not Allowed\n"
                         strE = msg.encode()
@@ -63,6 +64,7 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                         strE = msg.encode()
                         rsp.append("HTTP/1.1 404 Not Found")
                     else:
+                        error = False
                         strE = strObj.encode()
                         rsp.append("HTTP/1.1 200 OK")
 
@@ -70,7 +72,10 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                     rsp.append(("Content-Length: " + str(len(strE))))
                     rsp.append("Content-Type: text/plain; charset=utf-8")
                     rsp.append(("Date: " + datetime.now().strftime("%c")))
-                    rsp.append("Last-Modified: Wed Aug 29 11:00:00 2018")
+                    if error:
+                        rsp.append("Last-Modified: " + datetime.now().strftime("%c"))
+                    else:
+                        rsp.append("Last-Modified: Wed Aug 29 11:00:00 2018")
                     rsp.append("Server: CS430-Ahmad M. Osman")
                     rsp.append("\n")
                     rsp = '\n'.join(rsp)
