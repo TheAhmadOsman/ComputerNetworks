@@ -1,7 +1,6 @@
 """Python Web server implementation"""
 from socket import socket, AF_INET, SOCK_STREAM
 from datetime import datetime
-import sys
 
 server = socket(AF_INET, SOCK_STREAM)
 
@@ -35,7 +34,7 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                     print("Connection Closed.")
                     break
                 
-                # Getting response decoded
+                # Getting request decoded
                 request = data.decode()
                 r_lst = request.splitlines()
                 query = r_lst[0].split()
@@ -49,6 +48,10 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                         continue
                 
                 rsp = []
+
+                with open(LOGFILE, "a+") as f:
+                    f.write(str(datetime.isoformat(datetime.now()).replace('T', ' ')) + \
+                        " | " + quri  + " | " + str(addr[0]) + " | " + r_dct["User-Agent"] + '\n') 
 
                 # Checking for errors and encoding the sent data
                 if qtype != request_type:
