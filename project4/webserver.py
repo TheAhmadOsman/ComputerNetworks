@@ -25,33 +25,30 @@ def serve(strObj: str) -> None:
     server.listen(1)
     
     with server:
-        conn, addr = server.accept()
-        print("here!")
-        with conn:
-            request = conn.recv(1024)
-            # do we need to deal with multiple requests?
-            if not request:
-                print("Connection Closed!")
-                
-                """
-                ['GET /alice30.txt HTTP/1.1\r', 'Host: 127.0.0.1:4300\r', 'Connection: keep-alive\r', 'Upgrade-Insecure-Requests: 1\r', 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36\r', 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r', 'Accept-Encoding: gzip, deflate, br\r', 'Accept-Language: en-US,en;q=0.9,ar;q=0.8\r', '\r', '']
-                """
+        while True:
+            conn, addr = server.accept()
+            print("Connection Opened...")
+            with conn:
+                data = conn.recv(1024)
+                # do we need to deal with multiple requests?
+                if not data:
+                    print("Connection Closed.")
+                    
+                    """
+                    ['GET /alice30.txt HTTP/1.1\r', 'Host: 127.0.0.1:4300\r', 'Connection: keep-alive\r', 'Upgrade-Insecure-Requests: 1\r', 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36\r', 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r', 'Accept-Encoding: gzip, deflate, br\r', 'Accept-Language: en-US,en;q=0.9,ar;q=0.8\r', '\r', '']
+                    """
 
-                request = request.decode()
-                qlst = request.split()
-                query = qlst[0].split(' ')
-                qtype = qlst[0]
-                qdoc = qlst[1]
-                qver = qlst[2]
-                print(qtype, qdoc, qver)
+                    request = data.decode()
+                    rlst = request.split()
+                    query = rlst[0].split(' ')
+                    qtype = query[0]
+                    qdoc = query[1]
+                    qver = query[2]
+                    host = rlst[1]
+                    useragent = rlst[2]
 
-                
-                conn.sendall(strObj.encode())
-                # if country in world:
-                    # conn.sendall(world[country].encode('utf-8'))
-                # else:
-                    # conn.sendall("NOT FOUND".encode('utf-8'))
-
+                    
+                    # conn.sendall(strObj.encode())
 
 def alice():
     """Serve Alice in Wonderland"""
