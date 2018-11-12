@@ -75,8 +75,12 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                     rsp.append("\n")
                     rsp = '\n'.join(rsp)
 
-                    conn.sendall(rsp.encode())
-                    conn.sendall(strE)
+                    # try/except in case of a broken pipe!
+                    try:
+                        conn.sendall(rsp.encode())
+                        conn.sendall(strE)
+                    except:
+                        continue
 
 def alice():
     """Serve Alice in Wonderland"""
