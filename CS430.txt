@@ -416,3 +416,31 @@ THe data get queued in the router, and if there is congestion and timeout, packe
 
 IPv4: 2^32
 IPv6: 2^128
+
+---
+
+Project 5:
+    Pay special attention to "Select" lines
+
+HW9, Question 5:
+    The question to the first two, should be the same.
+    Zero(?)
+
+3,2,3
+
+ICMP - Internet Control Messaging Protocal
+    Report back something
+
+Question about Layers on the second exam
+
+IPV4 header
+
+MTU -> Max Transit Unit, depends on the link layer technology, and is basically how much you're allowed to send between two routers.
+
+Each router can have its own max fragment Size.
+
+    Routers do fragmentation, but do not do defragmentation.
+
+    IPv4 makes fragmentation the router's problem, while IPv6 made that problem on the machine level (still network layer), before reaching the router.
+
+255.255.255.255 -> Broadcasting IP, you send out to everybody on the local newtwork to fgiure out the ip address for you after booting for example. 
