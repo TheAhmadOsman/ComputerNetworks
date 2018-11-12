@@ -18,42 +18,64 @@ def read_file(filename: str) -> str:
 
     return strObj
 
-def serve(strObj: str) -> None:
-    '''Main server loop'''
+def serve(strObj: str, request_type: str, request_uri: str) -> None:
+    '''Serving content'''
     
     server.bind((ADDRESS, PORT))
     server.listen(1)
-    
+
     with server:
-        while True:
-            conn, addr = server.accept()
-            print("Connection Opened...")
-            with conn:
+        conn, addr = server.accept()
+        print("Connection Opened...")
+        with conn:
+            while True:
                 data = conn.recv(1024)
-                # do we need to deal with multiple requests?
                 if not data:
+                    server.close()
                     print("Connection Closed.")
-                    
-                    """
-                    ['GET /alice30.txt HTTP/1.1\r', 'Host: 127.0.0.1:4300\r', 'Connection: keep-alive\r', 'Upgrade-Insecure-Requests: 1\r', 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36\r', 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r', 'Accept-Encoding: gzip, deflate, br\r', 'Accept-Language: en-US,en;q=0.9,ar;q=0.8\r', '\r', '']
-                    """
+                    break
+                
+                # Getting response decoded
+                request = data.decode()
+                r_lst = request.splitlines()
+                query = r_lst[0].split()
+                qtype, quri = query[0], query[1]
+                r_lst = [s.split(": ") for s in r_lst[1:]]
+                r_dct = {}
+                for element in r_lst:
+                    try:
+                        r_dct[element[0]] = element[1]
+                    except:
+                        continue
+                
+                # Checking for errors and encoding the sent data
+                if qtype != request_type:
+                    msg = "405 Method Not Allowed\n"
+                    strE = msg.encode()
+                elif quri != request_uri:
+                    msg = "404 Not Found"
+                    strE = msg.encode()
+                else:
+                    strE = strObj.encode()
 
-                    request = data.decode()
-                    rlst = request.split()
-                    query = rlst[0].split(' ')
-                    qtype = query[0]
-                    qdoc = query[1]
-                    qver = query[2]
-                    host = rlst[1]
-                    useragent = rlst[2]
+                # Building response header
+                rsp = []
+                rsp.append("HTTP/1.1 200 OK")
+                rsp.append(("Content-Length: " + str(len(strE))))
+                rsp.append("Content-Type: text/plain; charset=utf-8")
+                rsp.append(("Date: " + datetime.now().strftime("%c")))
+                rsp.append("Last-Modified: Wed Aug 29 11:00:00 2018")
+                rsp.append("Server: CS430-Ahmad M. Osman")
+                rsp.append("\n")
+                rsp = '\n'.join(rsp)
 
-                    
-                    # conn.sendall(strObj.encode())
+                conn.sendall(rsp.encode())
+                conn.sendall(strE)
 
 def alice():
     """Serve Alice in Wonderland"""
     alice = read_file("alice30.txt")
-    serve(alice)
+    serve(alice, "GET", "/alice30.txt")
 
 
 def main():
