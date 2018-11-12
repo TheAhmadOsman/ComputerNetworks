@@ -24,10 +24,12 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
     server.listen(1)
 
     with server:
+        # Server loop - this will keep the server going until we close it ourselves!
         while True:
             conn, addr = server.accept()
             print("Connection Opened... Please close this client completely before using another one.")
             with conn:
+                # Connection loop - this will keep the same client connected until it fully shuts down.
                 while True:
                     data = conn.recv(1024)
                     if not data:
