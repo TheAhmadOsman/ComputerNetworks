@@ -48,19 +48,22 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
                     except:
                         continue
                 
+                rsp = []
+
                 # Checking for errors and encoding the sent data
                 if qtype != request_type:
                     msg = "405 Method Not Allowed\n"
                     strE = msg.encode()
+                    rsp.append("HTTP/1.1 405 Method Not Allowed")
                 elif quri != request_uri:
                     msg = "404 Not Found"
                     strE = msg.encode()
+                    rsp.append("HTTP/1.1 404 Not Found")
                 else:
                     strE = strObj.encode()
+                    rsp.append("HTTP/1.1 200 OK")
 
                 # Building response header
-                rsp = []
-                rsp.append("HTTP/1.1 200 OK")
                 rsp.append(("Content-Length: " + str(len(strE))))
                 rsp.append("Content-Type: text/plain; charset=utf-8")
                 rsp.append(("Date: " + datetime.now().strftime("%c")))
