@@ -53,12 +53,15 @@ default								default								3
 
 8-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11001000 10010001 01010001 01010101.
     Prefix matching for this destination address points to Link 3
+        This is because the destination address starts with 11001000 1, which is Link 3.
 
 
 9-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11100001 01000000 11000011 00111100.
     Prefix matching for this destination address points to Link 2
+        This is because the destination address starts with 11001001 0, which is within the range of Link 2 and yet does not reach the starting range of Link 3; making this Link 2.
 
 
 10-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11100001 10000000 00010001 01110111.
     Prefix matching for this destination address points to Link 3
+        This is because the destination address starts with 11001000 1, which is Link 3.
 
