@@ -27,67 +27,66 @@ def serve(strObj: str, request_type: str, request_uri: str) -> None:
         # Server loop - this will keep the server going until we close it ourselves!
         while True:
             conn, addr = server.accept()
-            print("Connection Opened... Please close this client completely before using another one.")
+            print("Connection Opened...")
             with conn:
-                # Connection loop - this will keep the same client connected until it fully shuts down.
-                while True:
-                    data = conn.recv(1024)
-                    if not data:
-                        print("Connection Closed.")
-                        break
-                    
-                    # Getting request decoded
-                    request = data.decode()
-                    r_lst = request.splitlines()
-                    query = r_lst[0].split()
-                    qtype, quri = query[0], query[1]
-                    r_lst = [s.split(": ") for s in r_lst[1:]]
-                    r_dct = {}
-                    for element in r_lst:
-                        try:
-                            r_dct[element[0]] = element[1]
-                        except:
-                            continue
-                    
-                    rsp = []
+                data = conn.recv(1024)
+                if not data:
+                    print("Connection Closed.")
+                    continue
 
-                    with open(LOGFILE, "a+") as f:
-                        f.write(str(datetime.isoformat(datetime.now()).replace('T', ' ')) + \
-                            " | " + quri  + " | " + str(addr[0]) + " | " + r_dct["User-Agent"] + '\n') 
-
-                    # Checking for errors and encoding the sent data
-                    error = True
-                    if qtype != request_type:
-                        msg = "405 Method Not Allowed\n"
-                        strE = msg.encode()
-                        rsp.append("HTTP/1.1 405 Method Not Allowed")
-                    elif quri != request_uri:
-                        msg = "404 Not Found"
-                        strE = msg.encode()
-                        rsp.append("HTTP/1.1 404 Not Found")
-                    else:
-                        error = False
-                        strE = strObj.encode()
-                        rsp.append("HTTP/1.1 200 OK")
-
-                    # Building response header
-                    rsp.append(("Content-Length: " + str(len(strE))))
-                    rsp.append("Content-Type: text/plain; charset=utf-8")
-                    rsp.append(("Date: " + datetime.now().strftime("%c")))
-                    if error:
-                        rsp.append("Last-Modified: " + datetime.now().strftime("%c"))
-                    else:
-                        rsp.append("Last-Modified: Wed Aug 29 11:00:00 2018")
-                    rsp.append("Server: CS430-Ahmad M. Osman")
-                    rsp.append("\n")
-                    rsp = '\n'.join(rsp)
-
-                    # try/except in case of a broken pipe!
+                # Getting request decoded
+                request = data.decode()
+                r_lst = request.splitlines()
+                query = r_lst[0].split()
+                qtype, quri = query[0], query[1]
+                r_lst = [s.split(": ") for s in r_lst[1:]]
+                r_dct = {}
+                for element in r_lst:
                     try:
-                        conn.sendall(rsp.encode())
-                        conn.sendall(strE)
+                        r_dct[element[0]] = element[1]
                     except:
                         continue
+                
+                rsp = []
+
+                with open(LOGFILE, "a+") as f:
+                    f.write(str(datetime.isoformat(datetime.now()).replace('T', ' ')) + \
+                        " | " + quri  + " | " + str(addr[0]) + " | " + r_dct["User-Agent"] + '\n') 
+
+                # Checking for errors and encoding the sent data
+                error = True
+                if qtype != request_type:
+                    msg = "405 Method Not Allowed\n"
+                    strE = msg.encode()
+                    rsp.append("HTTP/1.1 405 Method Not Allowed")
+                elif quri != request_uri:
+                    msg = "404 Not Found"
+                    strE = msg.encode()
+                    rsp.append("HTTP/1.1 404 Not Found")
+                else:
+                    error = False
+                    strE = strObj.encode()
+                    rsp.append("HTTP/1.1 200 OK")
+
+                # Building response header
+                rsp.append(("Content-Length: " + str(len(strE))))
+                rsp.append("Content-Type: text/plain; charset=utf-8")
+                rsp.append(("Date: " + datetime.now().strftime("%c")))
+                if error:
+                    rsp.append("Last-Modified: " + datetime.now().strftime("%c"))
+                else:
+                    rsp.append("Last-Modified: Wed Aug 29 11:00:00 2018")
+                rsp.append("Server: CS430-Ahmad M. Osman")
+                rsp.append("\n")
+                rsp = '\n'.join(rsp)
+
+                # try/except in case of a broken pipe!
+                try:
+                    conn.sendall(rsp.encode())
+                    conn.sendall(strE)
+                except:
+                    pass
+            print("Connection Closed.")
 
 def alice():
     """Serve Alice in Wonderland"""
