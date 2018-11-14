@@ -444,3 +444,16 @@ Each router can have its own max fragment Size.
     IPv4 makes fragmentation the router's problem, while IPv6 made that problem on the machine level (still network layer), before reaching the router.
 
 255.255.255.255 -> Broadcasting IP, you send out to everybody on the local newtwork to fgiure out the ip address for you after booting for example. 
+
+A subnet with multiple switches can show that switches have multiple interfaces to deal with other switches and the machines' networks. 
+
+What matters in IPs is the last number. Like how Luther is assigned 72.207.32.0 to 72.207.64.255. The first two are the network prefix and the second two are host address. Luther is given 19 bits of network prefix and 13 for host address. 
+
+    The number of possible addresses 2^13 
+        Two are very special addresses making the possible address to for hass address 
+            2^13 -2 possible addresses
+        the number of bits available for hos addresses, when filled with 0s, makes it the network address
+        the number of bits available for host addresses, when filled with 1s, makes it local broadcasting
+    
+Masks are assigned
+    Masks are used to do and bitwise operation on and extract the network prefix. This helps the router figure which route. The masks are assigned by ISP.
