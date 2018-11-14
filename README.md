@@ -1,11 +1,12 @@
 # The Story about Ping
 
-Implement a *ping* application using ICMP request and reply messages. You have to use Python's *RAW* sockets to properly send ICMP messages. You should complete the provided ping application so that it sends 10 Echo requests to each RIR (ARIN, RIPE, LACNIC, AFRINIC, APNIC), 1 request every second. Each message contains a payload of data that includes a timestamp. After sending each packet, the application waits up to one second to receive a reply. If the one-second timer expires, assume the packet is lost or the server is down. Report the following statistics for each host:
+Implement a *ping* application using ICMP request and reply messages. You have to use Python's *RAW* sockets to properly send ICMP messages. You should complete the provided ping application so that it sends 5 Echo requests to each RIR (ARIN, RIPE, LACNIC, AFRINIC, APNIC), 1 request every second. Each message contains a payload of data that includes a timestamp. After sending each packet, the application waits up to one second to receive a reply. If the one-second timer expires, assume the packet is lost or the server is down. Report the following statistics for each host:
 
 * packet loss
 * maximum round-trip time
 * minimum RTT
 * average RTT
+* RTT standard deviation
 
 ## Code notes
 
@@ -17,15 +18,23 @@ When running this application as a root, make sure to use `python3`.
 
 ### Functions
 
-* `checksum`: calculates packet checksum. Can be used without modifications.
+* `print_raw_bytes`: auxiliary function, useful for debugging. Takes (received) *packet bytes* as an argument. **Can be used without modifications**
 
-* `receive_a_ping`: receives and processes and echo reply.
+* `checksum`: calculates packet checksum. Takes *packet bytes* as an argument. **Can be used without modifications**
 
-* `send_a_ping`: formats and send echo request.
+* `parse_reply`: receives and parses an echo reply. Takes the following arguments: *socket*, *request id*, *timeout*, and the *destination address*. Returns a tuple of the *destination address*, *packet size*, *roundtrip time*, *time to live*, and *sequence number*. You need to modify lines between labels **TODO** and **DONE**. This function should raise an error if the response message type, code, or checksum are incorrect.
 
-* `do_a_ping`: creates a socket and uses `send_a_ping` to actually send the message. Can be used without modifications.
+* `format_request`: formats echo request. Takes *request id* and *sequence number* as arguments. **Can be used without modifications**
 
-* `ping`: main loop. Can be used without modifications.
+0 || 15 ||
+---|---|---|---
+type | code | checksum
+id || sequence
+
+
+* `send_request`: creates a socket and uses sends a message prepared by `format_request`. **Can be used without modifications**
+
+* `ping`: main loop. Takes a *destination host*, *number of packets to send*, and *timeout* as arguments. Displays host statistics. You need to modify lines between labels **TODO** and **DONE**.
 
 ## References
 

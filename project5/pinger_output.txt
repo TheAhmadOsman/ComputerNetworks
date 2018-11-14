@@ -1,0 +1,59 @@
+
+--- Ping afrinic.net (196.216.2.6) using Python ---
+
+36 bytes from 196.216.2.6: icmp_seq=1 TTL=128 time=257.80 ms
+36 bytes from 196.216.2.6: icmp_seq=2 TTL=128 time=276.89 ms
+36 bytes from 196.216.2.6: icmp_seq=3 TTL=128 time=330.03 ms
+36 bytes from 196.216.2.6: icmp_seq=4 TTL=128 time=327.21 ms
+36 bytes from 196.216.2.6: icmp_seq=5 TTL=128 time=258.53 ms
+
+--- afrinic.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss
+rtt min/avg/max/mdev = 257.803/290.093/330.027/36.005 ms
+
+--- Ping apnic.net (203.119.101.61) using Python ---
+
+36 bytes from 203.119.101.61: icmp_seq=1 TTL=128 time=294.96 ms
+36 bytes from 203.119.101.61: icmp_seq=2 TTL=128 time=327.19 ms
+36 bytes from 203.119.101.61: icmp_seq=3 TTL=128 time=221.30 ms
+36 bytes from 203.119.101.61: icmp_seq=4 TTL=128 time=232.25 ms
+36 bytes from 203.119.101.61: icmp_seq=5 TTL=128 time=227.27 ms
+
+--- apnic.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss
+rtt min/avg/max/mdev = 221.300/260.596/327.190/47.628 ms
+
+--- Ping arin.net (199.43.0.43) using Python ---
+
+36 bytes from 199.43.0.43: icmp_seq=1 TTL=128 time=39.32 ms
+36 bytes from 199.43.0.43: icmp_seq=2 TTL=128 time=40.75 ms
+36 bytes from 199.43.0.43: icmp_seq=3 TTL=128 time=40.33 ms
+36 bytes from 199.43.0.43: icmp_seq=4 TTL=128 time=40.35 ms
+36 bytes from 199.43.0.43: icmp_seq=5 TTL=128 time=40.57 ms
+
+--- arin.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss
+rtt min/avg/max/mdev = 39.317/40.263/40.748/0.556 ms
+
+--- Ping lacnic.net (200.3.14.10) using Python ---
+
+36 bytes from 200.3.14.10: icmp_seq=1 TTL=128 time=170.82 ms
+36 bytes from 200.3.14.10: icmp_seq=2 TTL=128 time=205.16 ms
+36 bytes from 200.3.14.10: icmp_seq=3 TTL=128 time=188.67 ms
+36 bytes from 200.3.14.10: icmp_seq=4 TTL=128 time=164.20 ms
+36 bytes from 200.3.14.10: icmp_seq=5 TTL=128 time=158.64 ms
+
+--- lacnic.net ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss
+rtt min/avg/max/mdev = 158.644/177.499/205.155/19.149 ms
+
+--- Ping ripe.net (193.0.6.139) using Python ---
+
+No response: Request timed out after 1 sec
+No response: Request timed out after 1 sec
+No response: Request timed out after 1 sec
+No response: Request timed out after 1 sec
+No response: Request timed out after 1 sec
+
+--- ripe.net ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss
