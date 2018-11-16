@@ -459,5 +459,42 @@ What matters in IPs is the last number. Like how Luther is assigned 72.207.32.0 
         the number of bits available for hos addresses, when filled with 0s, makes it the network address
         the number of bits available for host addresses, when filled with 1s, makes it local broadcasting
     
+        ^^^ WILL BE ON FINAL EXAM!
+
 Masks are assigned
     Masks are used to do and bitwise operation on and extract the network prefix. This helps the router figure which route. The masks are assigned by ISP.
+
+Internally, Luther can split its subnet into smaller subnets -> like 74.207.x.x for Luther, and Luther assigns 74.207.1.x to CS, 74.207.2.x for Biology, etc...
+
+ICANN -> Internet Corporation for Assigned Names and Numbers
+    Gives out IP addresses and port numbers
+    Thiss is the governing body, worldwide. The internet started in the US.
+    You have organizations for the five big regions in the world that assign IPs and ports to each region.
+
+    ISPs are given addresses from ICANN or its smaller organizations.
+
+Look at the picture
+    LC wants 12 ips, and Walmart wants 9, given 128.211.0.0/16. what can easily happens is dividing the number of IPs on those two but having a decisive bit and turning it on and off.
+
+    What we should really do is making the fourth bit for example the decisive bit, and give luther college 16 ips, and same for Walmart.
+
+    The ISP itself as a mask, and then it assigns smaller masks for organizations.
+
+    Customers can have multiple different IPs blocks assigned to them in case of extensions. For example:
+        128.211.0.0/28 -> C1
+        128.211.0.16/28 -> C2
+        128.211.0.127/17 -> C1 ; he wanted to extension.
+    
+Subnetting allows ISPs the flexibility to divide IPs to customers.
+
+Personal Routers are more like Gateways
+    Routers do not do routing here
+ISPs are the ones responsible for routing
+
+Host Addresses can be called Interfaces too.
+
+The broadcasting address has to have all 1s in the host address -> The last address
+The network address has to have all 0s in the host address -> The first address
+
+VLSM -> Variable Length Subnet Mask
+    
