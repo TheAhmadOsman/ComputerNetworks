@@ -496,5 +496,30 @@ Host Addresses can be called Interfaces too.
 The broadcasting address has to have all 1s in the host address -> The last address
 The network address has to have all 0s in the host address -> The first address
 
-VLSM -> Variable Length Subnet Mask
-    
+VLSM -> Variable Length Subnet Mask - the following is about that.
+
+inet and netmask -> network address and brodcasting address are going to be on final.
+
+inet is 10.24.4.139 / 24
+mask is 255.255.255.0
+network address is the & bitwise operator on the two above
+        10.24.4.0
+brodcasting address is filling the rightmost zero bits with one fields
+        10.24.4.225
+            Just fill in the zeros of the host address part
+host addresses range between 10.24.4.255
+
+Take care between the difference of number of possible address and possible host addresses
+    Possible addresses is 2^8 -> 2^(32-24)
+    Possilbe host addresses is 2^8 - 2 -> 2^(32-24) -2
+        Minus network address and brodcasting address
+
+Subnets can be splitted into different powers of 2. So, 256 subnet does not have to split into 2 128s but can be splitted into two of 64s and one 128.
+
+Broadcasting address has to be an odd number.
+
+Homework 10 -> we can be done with earlier.
+
+/31 as a mask gives you broadcasting and network addresses
+/32 is just one address, not a subnet
+/30 would give you 2 hos addresses + brodcasting and network address
