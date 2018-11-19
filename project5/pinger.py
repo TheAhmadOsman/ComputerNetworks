@@ -55,10 +55,14 @@ def checksum(pkt: bytes) -> int:
     return result
 
 
-def parse_reply(
-    my_socket: socket.socket, req_id: int, timeout: int, addr_dst: str
-) -> tuple:
-    """Receive an Echo reply"""
+def parse_reply(my_socket: socket.socket, req_id: int, timeout: int, addr_dst: str) -> tuple:
+    """
+        Receive an Echo reply and parses it.
+        Takes the following arguments: socket, request id, timeout, and the destination address. 
+        Returns a tuple of the destination address, packet size, roundtrip time, time to live, and sequence number. 
+        You need to modify lines between labels TODO and DONE. 
+        This function should raise an error if the response message type, code, or checksum are incorrect.
+    """
     time_left = timeout
     while True:
         started_select = time.time()
@@ -120,7 +124,11 @@ def send_request(addr_dst: str, seq_num: int, timeout: int = 1) -> tuple:
 
 
 def ping(host: str, pkts: int, timeout: int = 1) -> None:
-    """Main loop"""
+    """
+        Main loop
+        Takes a destination host, number of packets to send, and timeout as arguments. 
+        Displays host statistics. You need to modify lines between labels TODO and DONE.
+    """
     # TODO: Implement the main loop
 
     # DONE
