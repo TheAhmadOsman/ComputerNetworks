@@ -14,7 +14,7 @@
         Packet 1: len=700, id=422, fragflag=1, offset=0
         Packet 2: len=700, id=422, fragflag=1, offset=85
         Packet 3: len=700, id=422, fragflag=1, offset=170
-        Packet 4: len=380, id=422, fragflag=0, offset=255
+        Packet 4: len=360, id=422, fragflag=0, offset=255
 
 
 4-Suppose datagrams are limited to 1,500 bytes (including header) between source Host A and destination Host B. Assuming a 20-byte IP header, how many datagrams would be required to send an MP3 consisting of 5 million bytes? Explain how you computed your answer.
