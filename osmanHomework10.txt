@@ -1,0 +1,28 @@
+1-Why does IP fragmentation happen? What network entity is responsible for the fragments reassembly?
+
+2-What problem(s) does NAT solve? Briefly describe any major shortcoming of this technology.
+
+3-Consider sending a 2400-byte datagram into a link that has an MTU of 700 bytes. Suppose the original datagram is stamped with the identification number 422. How many fragments are generated? What are the values in the various fields in the IP datagram(s) generated related to fragmentation?
+
+4-Suppose datagrams are limited to 1,500 bytes (including header) between source Host A and destination Host B. Assuming a 20-byte IP header, how many datagrams would be required to send an MP3 consisting of 5 million bytes? Explain how you computed your answer.
+
+5-ARIN's free pool of IPv4 address space was depleted on 24 September 2015. What does it mean for the future of Internet?
+
+6-Use ARIN's whois service to find IP address blocks allocated to Luther College and one other college/university. Can the whois service be used to determine precise geographical location of a specific IP address? Use IP Location Finder or a similar service to determine locations of Web servers of both colleges.
+
+
+Consider the attached network topology when answering questions 7-10:
+    Assign network addresses to each of these six subnets (the assignment should take the form a.b.c.d/x), with the following constraints:
+        All addresses must be allocated from 214.97.254.0/23; ignore the class of the address, /23 is a valid mask.
+        Subnet A should have enough addresses to support 250 interfaces;
+        Subnet B should have enough addresses to support 120 interfaces;
+        Subnet C should have enough addresses to support 120 interfaces.
+        Subnets D, E, and F should each be able to support two interfaces.
+
+7-What are the network address, broadcast address, and mask of the network A? How many host addresses are allocated to this network?
+
+8-What are the network address, broadcast address, and mask of the network B? How many host addresses are allocated to this network?
+
+9-What are the network address, broadcast address, and mask of the network C? How many host addresses are allocated to this network?
+
+10-What are the network addresses, broadcast addresses, and masks of the networks D, E, and F? How many host addresses are allocated to these networks?
