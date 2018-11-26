@@ -1,19 +1,18 @@
 # Router
-*This is the first draft of the final project description. Source file(s) will be posted at a later date.*
 
-In this project you will be writing a set of procedures to implement a distributed asynchronous distance-vector routing protocol. Eventually we'll try to make all the routers work together in the lab environment. In order to achieve general compatibility, it's mandatory that you use Python 3 for the implementation.
+In this project you will be writing a set of procedures to implement a distributed asynchronous distance-vector routing protocol. Eventually we'll try to make all the routers work together in the lab environment. In order to achieve general compatibility, it's mandatory that you use **Ubuntu 18.04** as a platform and **Python 3.6** as the implementation language.
 
 I recommend you implement your router application in stages, from a basic socket application to a full-fledged router.
 
-This is going to be a challenging project, not only in the sense of correctly implementing the distance-vector routing algorithm but also because your program must handle multiple connections that will operate asynchronously. There are several approaches to correctly deal with a bunch of asynchronous sockets, we are going to use the Python `select` method. The `select` method takes three lists, (sockets I want to read from, sockets I want to write to, sockets that might have errors) and checks all of the sockets lists. When the function returns (either right away, or after a set time), the lists you passed in will have been transformed into lists of sockets that you may want to read, write or check for errors respective. You can be assured that when you make a read or write call, the call will not block.
+This is going to be a challenging project, not only in the sense of correctly implementing the distance-vector routing algorithm but also because your program must handle multiple connections that will operate asynchronously. There are several approaches to correctly deal with a bunch of asynchronous sockets, we are going to use the Python `select` method. The `select` method takes three lists, (sockets I want to **read from**, sockets I want to **write to**, sockets that might have **errors**) and checks all of the sockets lists. When the function returns (either right away, or after a set time), the lists you passed in will have been transformed into lists of sockets that you may want to read, write or check for errors respectively. You can be assured that when you make a read or write call, the call will not block.
 
-I would strongly suggest that you take the time to write yourself a high-level design for this project before you start to write code. You may also find it useful to write a simple little server program that keeps multiple connections active and adds messages to a queue. Doing something very simple like this is a good way to learn and check out the problems you are likely to run into with asynchronous communications before you get mired in the whole distance-vector routing.
+I would strongly suggest that you take the time to write yourself a high-level design for this project before you start writing code. You may also find it useful to write a little server program that keeps multiple connections active and adds messages to a queue. Doing something very simple like this is a good way to learn and check out the problems you are likely to run into with asynchronous communications before you get mired in the whole distance-vector routing.
 
 ## Stage 1: Read the Configuration File
 
-We start with a simple application that reads a router's configuration from a text file, displays its status (neighbors and cost of getting to them), and starts listening for incoming UDP connections on port 4300. The configuration contains names of your directly connected neighbors and the cost to reach those neighbors.
+We start with a simple application that reads a router's configuration from a text file, displays its status (neighbors and cost of getting to them), and starts listening for incoming UDP connections on port 430**x**. The configuration contains names of your directly connected neighbors and the cost to reach those neighbors.
 
-You should write 4 (almost) identical files, each one for a different address (127.0.0.x). By the end of the project you should be able to test your routers locally, at the very least.
+You should write 4 identical files, each one for a different address (127.0.0.**x**). By the end of the project you should be able to test your routers locally, at the very least.
 
 ## Configuration file format
 
@@ -30,7 +29,7 @@ You should write 4 (almost) identical files, each one for a different address (1
 
 File *network_simple.txt* represents the following network:
 
-![Simple network](network_simple.png)
+![Simple network](final_project/network_simple.png)
 
 network_simple.txt
 ```
@@ -53,6 +52,10 @@ network_simple.txt
 127.0.0.3 2
 ```
 
+## Stage 1: Welcome to the Party
+
+Start with a socket application that reads network configuration from a file, binds to port 4300, and prints the routing table.
+
 ### Stage 1 Functionality
 
 1. Read the configuration file
@@ -62,11 +65,11 @@ network_simple.txt
 
 ## Stage 2: Close Encounters of the Third Kind
 
-Your program must connect to the IP addresses specified in the configuration file. Your client should accept a path to the configuration file as a command line argument so that we can try out a couple of different configurations. Note that in order to bootstrap the network you are going to need to have your program retry connections that fail.
+1. Your program must connect to the IP addresses specified in the configuration file. Your client should accept a path to the configuration file as a command line argument so that we can try out a couple of different configurations. Note that in order to bootstrap the network you are going to need to have your program retry connections that fail.
 
-Your program must also accept incoming IP connections from neighbors which may inform you of a link cost change, or may ask you to deliver a message to a particular IP address.
+2. Your program must also accept incoming IP connections from neighbors which may inform you of a link cost change, or may ask you to deliver a message to a particular IP address.
 
-Our protocol will use two types of messages: **UPDATE (0)** and** DELIVERY (1)**. You should use `bytearray` or `struct` to format and parse messages.
+3. Our protocol will use 3 (three) types of messages: **UPDATE (0)**, **DELIVERY (1)**, and **STATUS (2)**. You should use `bytearray` or `struct` to format and parse messages.
 
 ### UPDATE message format
 
@@ -88,37 +91,41 @@ Our protocol will use two types of messages: **UPDATE (0)** and** DELIVERY (1)**
 
 * The rest of the message (9+): text (characters)
 
+### STATUS message format
+
+* The first byte of the message (0): 2
+
 ### Event loop
 
 1. Do we have pending connections?
 
-    1. accept new connections
+    1. Accept new connections
 
-    2. add to the listener list
+    2. Add to the listener list
 
-    3. add IP addresses to the neighbor list
+    3. Add IP addresses to the neighbor list
 
 2. Process incoming messages
 
-    1. if UPDATE then update my routing table.
+    1. If UPDATE, then update the routing table
+        * Does my vector change?  If so, then set flag to `update_vector`
+        * Print the updated routing table
 
-    2. Does my vector change?  If so, then set flag to update_vector
+    2. If DELIVERY, then forward to the destination
 
-    3. if DELIVERY, then lookup who it should be passed on to
+    3. If STATUS, then respond with the routing table
 
-    4. Does my vector change?  If so, then set flag to update_vector
+3. Is `update_vector` flag set?
 
-3. Is update_vector flag set?
-
-    1. send the new vector to all neighbors that can accept data
+    1. Send the new vector to all neighbors that can accept data
 
 4. Check my neighbor list against the list of currently connected neighbors
 
-    1. if I'm missing neighbors then try to initiate connections to them.
+    1. If missing neighbors, then try to initiate connections to them
 
-    2. If I'm successful then add the new neighbor to list
+    2. If successful, then add the new neighbor to list
 
-    3. send the new neighbor my distance vector.
+    3. Send the new neighbor my distance vector
 
 ### Stage 2 Functionality
 
