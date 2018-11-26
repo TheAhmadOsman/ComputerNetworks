@@ -523,3 +523,23 @@ Homework 10 -> we can be done with earlier.
 /31 as a mask gives you broadcasting and network addresses
 /32 is just one address, not a subnet
 /30 would give you 2 hos addresses + brodcasting and network address
+
+Exam on Wednesday 12/5.
+
+DHCP -> Dynamic Host Service Protocol - Sets IP, DNS, and Gateway for you. If 169.254.x.x is set, that means that DHCP did not answer to your machine.
+    DHCP asks the machine who you are on booting, and if the machine does not answer, DHCP sends in "here is who you are!"
+
+ICMP's Codes are smaller parts of the ICMP's Types. Type 3 can have 3 different codes. 
+
+Network Address Translation (NAT)
+    If address is 0.0.0.0, it means that you're waiting for an address.
+    NAT Box -> hiding thousands, even millions, of private addresses, under one public IP living under a NAT Box. This NAT Box adds some security by hiding the organization behind the box. This is why IPv6 adaptation has been slow.
+
+IPv6
+    2^128 ~ 10^37 addresses
+    Not backward compaitable; reason why it is not adopted.
+    IPv6 comes with greater sense of security and security as built-in feature.
+
+Dikstra's and Heap Search
+
+The routers do Dikstra's graphing for routering every 2 seconds.
