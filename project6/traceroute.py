@@ -107,10 +107,10 @@ def receive_reply(open_socket: socket, timeout: int = 1) -> tuple:
     pkt_rcvd, addr = open_socket.recvfrom(1024)
 
     if not what_ready[0]:
-        raise TimeoutError("Request timed out")
+        raise socket.timeout("Request timed out")
     if time_left <= 0:
-        raise TimeoutError("Request timed out")
-        
+        raise socket.timeout("Request timed out")
+
     return (pkt_rcvd, addr[0])
 
 
@@ -120,7 +120,7 @@ def parse_reply(packet: bytes) -> bool:
         Takes a packet as an argument and returns True if it is a valid (expected) response. This function parses the response header and verifies that the ICMP type is 0, 3, or 11. It also validates the response checksum and raises a ValueError if it's incorrect.
     """
     expected_types = [0, 3, 11]
-    
+
     icmp_data = packet[28:]
     icmp_header = packet[20:28]
 
@@ -134,13 +134,14 @@ def parse_reply(packet: bytes) -> bool:
         "bbHHh", icmp_header)
 
     if icmp_msg_type not in expected_types:
-        raise ValueError(f"Incorrect type: {icmp_msg_type}. Expected {', '.join([str(x) for x in expected_types])}.")
+        raise ValueError(
+            f"Incorrect type: {icmp_msg_type}. Expected {', '.join([str(x) for x in expected_types])}.")
 
     check_sum_comptd = checksum(pseudo_header + icmp_data)
 
     if check_sum_rcvd != socket.htons(check_sum_comptd):
         raise ValueError(f"Incorrect checksum: {check_sum_rcvd}")
-    
+
     return True
 
 
@@ -164,53 +165,57 @@ def traceroute(hostname: str) -> None:
     delim = " "
 
     for ttl in range(1, MAX_HOPS + 1):
-        received_success=0
+        received_success = 0
         parsed_success = 0
 
         print(f"{ttl:<5d}", end="")
 
         for att in range(ATTEMPTS):
-            to_error_msg=""
-            v_error_msg=""
-            
-            time_sent=time.time()
-            packet=format_request(ECHO_REQUEST_TYPE, ECHO_REQUEST_CODE, my_id, att)
-            my_icmp_socket=send_request(packet, hostname, ttl)
-            
+            to_error_msg = ""
+            v_error_msg = ""
+
+            time_sent = time.time()
+            packet = format_request(
+                ECHO_REQUEST_TYPE, ECHO_REQUEST_CODE, my_id, att)
+            my_icmp_socket = send_request(packet, hostname, ttl)
 
             try:
-                pkt_rcvd, responder=receive_reply(my_icmp_socket, TIMEOUT)
+                pkt_rcvd, responder = receive_reply(my_icmp_socket, TIMEOUT)
                 received_success += 1
-            except TimeoutError as te:
-                to_error_msg=str(te)
+            # For some reason, excepting TimeoutError alone is not enough, I had to except socket.timeout...
+            except socket.timeout as te:
+                # te message is "timed out", and I wanted it to be "Request timed out"!
+                to_error_msg = "Request " + str(te)
             finally:
                 my_icmp_socket.close()
-                
+
             if to_error_msg:
+                print("{:>5s} {:2s}".format("TIME", " "), end="")
                 continue
 
-            time_rcvd=time.time()
-            rtt=(time_rcvd - time_sent) * 1000
+            time_rcvd = time.time()
+            rtt = (time_rcvd - time_sent) * 1000
+
             try:
                 parse_reply(pkt_rcvd)
                 parsed_success += 1
             except ValueError as ve:
-                v_error_msg=str(ve)
+                v_error_msg = str(ve)
 
             if v_error_msg:
+                print("{:>5s} {:2s}".format("ERR", " "), end="")
                 continue
 
-    
+            print(f"{rtt:>5.0f} ms", end="")
+
         if to_error_msg:
-            print("{:>5s} {:2s}".format("TIME", " "), end="")
             print(f"{delim:3s} {to_error_msg}")
         elif v_error_msg:
-            print("{:>5s} {:2s}".format("ERR", " "), end="")
+
             print(f"{delim:3s} {v_error_msg}")
         else:
-            print(f"{rtt:>5.0f} ms", end="")
             print(f"{delim:3s} {responder}")
-                    
+
         if responder == dest_addr:
             break
 
