@@ -160,8 +160,61 @@ def traceroute(hostname: str) -> None:
     print(
         f"Tracing route to {hostname} [{dest_addr}] over a maximum of {MAX_HOPS} hops\n")
 
+    my_id = os.getpid() & 0xFFFF
+    delim = " "
+
     for ttl in range(1, MAX_HOPS + 1):
+        received_success=0
+        parsed_success = 0
+
         for att in range(ATTEMPTS):
+            to_error_msg=""
+            v_error_msg=""
+            
+            time_sent=time.time()
+            packet=format_request(ECHO_REQUEST_TYPE, ECHO_REQUEST_CODE, my_id, att)
+            my_icmp_socket=send_request(packet, hostname, ttl)
+            
+
+            try:
+                pkt_rcvd, responder=receive_reply(my_icmp_socket, TIMEOUT)
+                received_success += 1
+            except TimeoutError as te:
+                to_error_msg=str(te)
+            finally:
+                my_icmp_socket.close()
+                
+            if to_error_msg:
+                continue
+
+            time_rcvd=time.time()
+            rtt=(time_rcvd - time_sent) * 1000
+            try:
+                parse_reply(pkt_rcvd)
+                parsed_success += 1
+            except ValueError as ve:
+                v_error_msg=str(ve)
+
+            if v_error_msg:
+                continue
+
+        print(f"{ttl:<5d}", end="")
+    
+        if to_error_msg:
+            print("{:>5s} {:2s}".format("TIME", " "), end="")
+            print(f"{delim:3s} {to_error_msg}")
+        elif v_error_msg:
+            print("{:>5s} {:2s}".format("ERR", " "), end="")
+            print(f"{delim:3s} {v_error_msg}")
+        else:
+            print(f"{rtt:>5.0f} ms", end="")
+            print(f"{delim:3s} {responder}")
+                    
+        if responder == dest_addr:
+            break
+
+    print("\nTrace complete.")
+    sys.exit(1)
 
 
 def main(args):
@@ -169,63 +222,14 @@ def main(args):
         Main Program.
         Takes command line arguments and starts the probe.
     """
-    traceroute(args[1])
+    try:
+        traceroute(args[1])
+    except IndexError:
+        print(f"Usage: {args[0]} <hostname>")
 
 
 if __name__ == "__main__":
+    """
+        Running Main
+    """
     main(sys.argv)
-
-
-return
-    """"""
-
-    delim = " "
-    except IndexError:
-
-    
-    my_id = os.getpid() & 0xFFFF
-    print("\nTrace complete.")
-    try:
-
-        elif v_error_msg:
-        else:
-        if responder == dest_addr:
-        if to_error_msg:
-        parsed_success = 0
-        print(f"{ttl:<5d}", end="")
-        print(f"Usage: {args[0]} <hostname>")
-        received_success=0
-        sys.exit(1)
-
-            break
-            except TimeoutError as te:
-            except ValueError as ve:
-            finally:
-            if to_error_msg:
-            if v_error_msg:
-            my_icmp_socket=send_request(packet, hostname, ttl)
-            print(f"{delim:3s} {responder}")
-            packet=format_request(
-                ECHO_REQUEST_TYPE, ECHO_REQUEST_CODE, my_id, att)
-            print(f"{delim:3s} {to_error_msg}")
-            print(f"{delim:3s} {v_error_msg}")
-            print(f"{rtt:>5.0f} ms", end="")
-            rtt=(time_rcvd - time_sent) * 1000
-            time_rcvd=time.time()
-            time_sent=time.time()
-            to_error_msg=""
-            try:
-            try:
-            v_error_msg=""
-
-                continue
-                continue
-                my_icmp_socket.close()
-                parse_reply(pkt_rcvd)
-                parsed_success += 1
-                pkt_rcvd, responder=receive_reply(my_icmp_socket, TIMEOUT)
-                print("{:>5s} {:2s}".format("ERR", " "), end="")
-                print("{:>5s} {:2s}".format("TIME", " "), end="")
-                received_success += 1
-                to_error_msg=str(te)
-                v_error_msg=str(ve)
