@@ -167,6 +167,8 @@ def traceroute(hostname: str) -> None:
         received_success=0
         parsed_success = 0
 
+        print(f"{ttl:<5d}", end="")
+
         for att in range(ATTEMPTS):
             to_error_msg=""
             v_error_msg=""
@@ -198,7 +200,6 @@ def traceroute(hostname: str) -> None:
             if v_error_msg:
                 continue
 
-        print(f"{ttl:<5d}", end="")
     
         if to_error_msg:
             print("{:>5s} {:2s}".format("TIME", " "), end="")
