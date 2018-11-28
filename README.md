@@ -1,5 +1,7 @@
 # Router
 
+## Task
+
 In this project you will be writing a set of procedures to implement a distributed asynchronous distance-vector routing protocol. Eventually we'll try to make all the routers work together in the lab environment. In order to achieve general compatibility, it's mandatory that you use **Ubuntu 18.04** as a platform and **Python 3.6** as the implementation language.
 
 I recommend you implement your router application in stages, from a basic socket application to a full-fledged router.
@@ -8,23 +10,29 @@ This is going to be a challenging project, not only in the sense of correctly im
 
 I would strongly suggest that you take the time to write yourself a high-level design for this project before you start writing code. You may also find it useful to write a little server program that keeps multiple connections active and adds messages to a queue. Doing something very simple like this is a good way to learn and check out the problems you are likely to run into with asynchronous communications before you get mired in the whole distance-vector routing.
 
-## Stage 1: Read the Configuration File
-
-We start with a simple application that reads a router's configuration from a text file, displays its status (neighbors and cost of getting to them), and starts listening for incoming UDP connections on port 430**x**. The configuration contains names of your directly connected neighbors and the cost to reach those neighbors.
-
-You should write 4 identical files, each one for a different address (127.0.0.**x**). By the end of the project you should be able to test your routers locally, at the very least.
-
-## Configuration file format
+Each router should maintain a set of NEIGHBORS (adjacent routers) and a ROUTING_TABLE as a dictionary in the following format:
 
 ```
-<Router 1 IP address>
-<Neighbor 1 IP address> <Neighbor 1 cost>
-<Neighbor 2 IP address> <Neighbor 2 cost>
-<blank line>
-<Router 2 IP address>
-<Neighbor 1 IP address> <Neighbor 1 cost>
-<Neighbor 2 IP address> <Neighbor 2 cost>
-<Neighbor 3 IP address> <Neighbor 3 cost>
+destination: [cost, next_hop]
+```
+
+## Stage 1: Read the Configuration File
+
+We start with a simple application that reads a router's configuration from a text file, displays its status (neighbors and cost of getting to them), and starts listening for incoming UDP connections on port 4300. The configuration contains names of your directly connected neighbors and the cost to reach those neighbors.
+
+You should write 4 identical files, each one for a different address (127.0.0.**x**) and port (4300**x**). By the end of the project you should be able to test your routers locally, at the very least.
+
+### Configuration file format
+
+```
+Router_1_IP_address
+Neighbor_1_IP_addres Cost_of_getting_to_neighbor_1
+Neighbor_2_IP_addres Cost_of_getting_to_neighbor_2
+
+Router_2_IP_address
+Neighbor_1_IP_addres Cost_of_getting_to_neighbor_1
+Neighbor_2_IP_addres Cost_of_getting_to_neighbor_2
+Neighbor_3_IP_addres Cost_of_getting_to_neighbor_3
 ```
 
 File *network_simple.txt* represents the following network:
@@ -61,7 +69,7 @@ Start with a socket application that reads network configuration from a file, bi
 1. Read the configuration file
 2. Pick an appropriate address
 3. Display the chosen router's neighborhood (names and costs)
-4. Start listening on UDP port 4300
+4. Start listening on **UDP** port 4300
 
 ## Stage 2: Close Encounters of the Third Kind
 
@@ -69,7 +77,7 @@ Start with a socket application that reads network configuration from a file, bi
 
 2. Your program must also accept incoming IP connections from neighbors which may inform you of a link cost change, or may ask you to deliver a message to a particular IP address.
 
-3. Our protocol will use 3 (three) types of messages: **UPDATE (0)**, **DELIVERY (1)**, and **STATUS (2)**. You should use `bytearray` or `struct` to format and parse messages.
+3. Our protocol will use 3 (three) types of messages: **UPDATE (0)**, **HELLO (1)**, and **STATUS (2)**. The implementation of the first two is required, **STATUS** is optional. You should use `bytearray` or `struct` to format and parse messages.
 
 ### UPDATE message format
 
@@ -81,7 +89,7 @@ Start with a socket application that reads network configuration from a file, bi
 
 * The same pattern (IP address followed by cost) repeats. 
 
-### DELIVERY message format
+### HELLO message format
 
 * The first byte of the message (0): 1
 
@@ -160,3 +168,60 @@ Write the following routing functions.
 * Parse a message to deliver. The function must parse the message and extract the destination address. Look up the destination address in the routing table and return the next hop address.
 
 * Router works with properly implemented routers of other students.
+
+## Functions
+
+### read_file(filename)
+
+* Read a configuration file for your specific router and add each neighbor to a set of neighbors.
+* Build an initial routing table as a dictionary with nodes as keys.
+* Dictionary values should be a distance to the node and the next hop address (ie. {'destination':[cost, 'next_hop']}).
+* Initially, the dictionary must contain your neighbors only.
+
+### format_update_msg()
+
+* Format the update message based on the values in the routing table.
+* The message advertising routes to 127.0.0.1 of cost 10 and to 127.0.0.2 of cost 5 is a bytearray in the following format
+```
+0x0 0x7f 0x0 0x0 0x1 0xA 0x7f 0x0 0x0 0x2 0x5
+```
+* The function must return the message.
+
+### update_table(msg, neigh_addr)
+
+* Parse the update message.
+* The function must take a message (raw bytes) and the neighbor's address and update the routing table, if necessary.
+* The function must return True if the table has been updated.
+
+### print_status()
+
+* Print current routing table.
+* The function must print the current routing table in a human-readable format (rows, columns, spacing).
+
+### deliver_msg()
+
+* Parse a message to deliver.
+* The function must parse the message and extract the destination address.
+* Look up the destination address in the routing table and return the next hop address.
+
+### send_update(node)
+
+* Send updated routing table to the specified node (router)
+
+## Running the simulation
+
+Start each router as follows:
+
+```
+python3 udp_node_1.py network_simple.txt
+python3 udp_node_2.py network_simple.txt
+python3 udp_node_3.py network_simple.txt
+python3 udp_node_4.py network_simple.txt
+```
+
+[Simulation](final_project/router.webm)
+
+## References
+
+* [socket — Low-level networking interface — Python 3.7.1 documentation](https://docs.python.org/3/library/socket.html)
+* [select — Waiting for I/O completion — Python 3.7.1 documentation](https://docs.python.org/3/library/select.html)
