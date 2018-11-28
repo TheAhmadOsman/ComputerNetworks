@@ -60,6 +60,8 @@ network_simple.txt
 127.0.0.3 2
 ```
 
+*TOML* file provides some explanation. **You don't have to read network configuration from TOML config file**.
+
 ## Stage 1: Welcome to the Party
 
 Start with a socket application that reads network configuration from a file, binds to port 4300, and prints the routing table.
@@ -225,3 +227,5 @@ python3 router_1.py network_simple.txt
 
 * [socket — Low-level networking interface — Python 3.7.1 documentation](https://docs.python.org/3/library/socket.html)
 * [select — Waiting for I/O completion — Python 3.7.1 documentation](https://docs.python.org/3/library/select.html)
+
+* [toml-lang/toml: Tom's Obvious, Minimal Language](https://github.com/toml-lang/toml)
