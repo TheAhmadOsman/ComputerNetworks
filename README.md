@@ -35,9 +35,9 @@ Neighbor_2_IP_addres Cost_of_getting_to_neighbor_2
 Neighbor_3_IP_addres Cost_of_getting_to_neighbor_3
 ```
 
-File *network_simple.txt* represents the following network:
+File *network_1_config.txt* represents the following network:
 
-![Simple network](final_project/network_simple.png)
+![Simple network](final_project/network_1_layout.png)
 
 network_simple.txt
 ```
@@ -60,7 +60,7 @@ network_simple.txt
 127.0.0.3 2
 ```
 
-*TOML* file provides some explanation. **You don't have to read network configuration from TOML config file**.
+File *network_1_config.toml* provides some explanation. **You don't have to read network configuration from TOML config file**.
 
 ## Stage 1: Welcome to the Party
 
@@ -215,10 +215,10 @@ Write the following routing functions.
 Start each router as follows:
 
 ```
-python3 router_1.py network_simple.txt
-python3 router_1.py network_simple.txt
-python3 router_1.py network_simple.txt
-python3 router_1.py network_simple.txt
+python3 router_1.py network_1_config.txt
+python3 router_2.py network_1_config.txt
+python3 router_3.py network_1_config.txt
+python3 router_4.py network_1_config.txt
 ```
 
 ![Simulation](final_project/router.apng)
@@ -226,6 +226,7 @@ python3 router_1.py network_simple.txt
 ## References
 
 * [socket — Low-level networking interface — Python 3.7.1 documentation](https://docs.python.org/3/library/socket.html)
+
 * [select — Waiting for I/O completion — Python 3.7.1 documentation](https://docs.python.org/3/library/select.html)
 
 * [toml-lang/toml: Tom's Obvious, Minimal Language](https://github.com/toml-lang/toml)

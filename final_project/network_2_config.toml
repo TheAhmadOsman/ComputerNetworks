@@ -1,0 +1,68 @@
+# This is a network 2 configuration file
+
+[[routers]]
+name = "t"
+address = "127.0.0.1"
+neighbors = [
+
+    { address = "127.0.0.2", cost = 2 },
+    { address = "127.0.0.3", cost = 4 },
+    { address = "127.0.0.6", cost = 7 }
+]
+    
+[[routers]]
+name = "u"
+address = "127.0.0.2"
+neighbors = [
+    { address = "127.0.0.1", cost = 2 },
+    { address = "127.0.0.3", cost = 3 },
+    { address = "127.0.0.4", cost = 3 }
+]
+
+[[routers]]
+name = "v"
+address = "127.0.0.3"
+neighbors = [
+    { address = "127.0.0.1", cost = 4 },
+    { address = "127.0.0.2", cost = 3 },
+    { address = "127.0.0.4", cost = 4 },
+    { address = "127.0.0.5", cost = 3 },
+    { address = "127.0.0.6", cost = 8 }
+]
+
+[[routers]]
+name = "w"
+address = "127.0.0.4"
+neighbors = [
+    { address = "127.0.0.2", cost = 3 },
+    { address = "127.0.0.3", cost = 4 },
+    { address = "127.0.0.5", cost = 6 }
+]
+
+[[routers]]
+name = "x"
+address = "127.0.0.5"
+neighbors = [
+    { address = "127.0.0.3", cost = 3 },
+    { address = "127.0.0.4", cost = 6 },
+    { address = "127.0.0.6", cost = 6 },
+    { address = "127.0.0.7", cost = 8 }
+]
+
+[[routers]]
+name = "y"
+address = "127.0.0.6"
+neighbors = [
+    { address = "127.0.0.1", cost = 7 },
+    { address = "127.0.0.3", cost = 8 },
+    { address = "127.0.0.5", cost = 6 },
+    { address = "127.0.0.7", cost = 12 }
+]
+
+[[routers]]
+name = "z"
+address = "127.0.0.7"
+neighbors = [
+    { address = "127.0.0.5", cost = 8 },
+    { address = "127.0.0.6", cost = 12 }
+]
