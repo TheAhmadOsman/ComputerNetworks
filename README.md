@@ -213,13 +213,13 @@ Write the following routing functions.
 Start each router as follows:
 
 ```
-python3 udp_node_1.py network_simple.txt
-python3 udp_node_2.py network_simple.txt
-python3 udp_node_3.py network_simple.txt
-python3 udp_node_4.py network_simple.txt
+python3 router_1.py network_simple.txt
+python3 router_1.py network_simple.txt
+python3 router_1.py network_simple.txt
+python3 router_1.py network_simple.txt
 ```
 
-[Simulation](final_project/router.webm)
+![Simulation](final_project/router.apng)
 
 ## References
 
