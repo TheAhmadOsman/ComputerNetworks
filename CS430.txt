@@ -543,3 +543,15 @@ IPv6
 Dikstra's and Heap Search
 
 The routers do Dikstra's graphing for routering every 2 seconds.
+
+THere are different criterias to use to get from Routers to others, not just the distance, but also the type of wire(copper, fiber), the bandwith speed, etc...
+
+If something changes in the network, like some links between routers getting shutdown due to digging or something, all the routers will brodcast their routing tables to all the others, this might take time, but this helps in synchronizing the routing table (this is the dikstra's graph between the routers, without the focus on the algorithm calculated values for a specific vertix)
+
+There are different Routing Algorithms.
+
+Dijkstra's Algorithm HW is going to be on the exam.
+
+If a link between W and Z starts gets to get lower cost, like 0, they have an incentive to hid their cost because of congestion.
+
+
