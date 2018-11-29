@@ -221,6 +221,14 @@ python3 router_3.py network_1_config.txt
 python3 router_4.py network_1_config.txt
 ```
 
+## Capturing the traffic
+
+Use the provided dissector *router_proto_dissector.lua* to see routing messages in Wireshark.
+
+```
+wireshark -X lua_script:router_proto_dissector.lua router.pcapng &
+```
+
 ![Simulation](final_project/router.apng)
 
 ## References
