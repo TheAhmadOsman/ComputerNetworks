@@ -1,4 +1,4 @@
-# Router
+# Trivial Routing Protocol
 
 ## Task
 
@@ -12,8 +12,8 @@ I would strongly suggest that you take the time to write yourself a high-level d
 
 Each router should maintain a set of NEIGHBORS (adjacent routers) and a ROUTING_TABLE as a dictionary in the following format:
 
-```
-destination: [cost, next_hop]
+```python
+{'destination':[cost, 'next_hop']}
 ```
 
 ## Stage 1: Read the Configuration File
@@ -37,30 +37,7 @@ Neighbor_3_IP_addres Cost_of_getting_to_neighbor_3
 
 File *network_1_config.txt* represents the following network:
 
-![Simple network](final_project/network_1_layout.png)
-
-network_simple.txt
-```
-127.0.0.1
-127.0.0.2 1
-127.0.0.3 3
-127.0.0.4 7
-
-127.0.0.2
-127.0.0.1 1
-127.0.0.3 1
-
-127.0.0.3
-127.0.0.1 3
-127.0.0.2 1
-127.0.0.4 2
-
-127.0.0.4
-127.0.0.1 7
-127.0.0.3 2
-```
-
-File *network_1_config.toml* provides some explanation. **You don't have to read network configuration from TOML config file**.
+![Simple network](network_1_layout.png)
 
 ## Stage 1: Welcome to the Party
 
@@ -79,7 +56,12 @@ Start with a socket application that reads network configuration from a file, bi
 
 2. Your program must also accept incoming IP connections from neighbors which may inform you of a link cost change, or may ask you to deliver a message to a particular IP address.
 
-3. Our protocol will use 3 (three) types of messages: **UPDATE (0)**, **HELLO (1)**, and **STATUS (2)**. The implementation of the first two is required, **STATUS** is optional. You should use `bytearray` or `struct` to format and parse messages.
+3. Our protocol will use the following types of messages:
+
+* **UPDATE (0)**
+* **HELLO (1)**
+
+You should use `bytearray` or `struct` to format and parse messages.
 
 ### UPDATE message format
 
@@ -91,6 +73,17 @@ Start with a socket application that reads network configuration from a file, bi
 
 * The same pattern (IP address followed by cost) repeats. 
 
+```
+0       7 8     15 16    23 24    31 32    39 
++--------+--------+--------+--------+--------+
+|  Type  |           IP Address 1            |
++--------+--------+--------+--------+--------+
+| Cost 1 |           IP Address 2            |
++--------+--------+--------+--------+--------+
+| Cost 2 |     Another record ...
++--------+--------+--------+--------+--------+
+```
+
 ### HELLO message format
 
 * The first byte of the message (0): 1
@@ -101,9 +94,16 @@ Start with a socket application that reads network configuration from a file, bi
 
 * The rest of the message (9+): text (characters)
 
-### STATUS message format
-
-* The first byte of the message (0): 2
+```
+0       7 8     15 16    23 24    31 32    39 
++--------+--------+--------+--------+--------+
+|  Type  |        Source IP Address          |
++--------+--------+--------+--------+--------+
+|  Destination IP Address           |  Text
++--------+--------+--------+--------+--------+
+|  Continuation of message text
++--------+--------+--------+--------+--------+
+```
 
 ### Event loop
 
@@ -221,20 +221,35 @@ python3 router_3.py network_1_config.txt
 python3 router_4.py network_1_config.txt
 ```
 
-## Capturing the traffic
+![Simulation](routing.apng)
 
-Use the provided dissector *router_proto_dissector.lua* to see routing messages in Wireshark.
+### Capturing the traffic
+
+Use the provided dissector *trivial_routing_protocol.lua* to see routing messages in Wireshark.
 
 ```
-wireshark -X lua_script:router_proto_dissector.lua router.pcapng &
+wireshark -X lua_script:trivial_routing_protocol.lua routing_capture.pcapng &
 ```
 
-![Simulation](final_project/router.apng)
+## Grading
+
+Functionality | Points
+---|---
+Read network configuration file | 20
+Display router's Distance Vector | 20 
+Format UPDATE message | 20
+Send UPDATE message to all neighbors, if necessary | 20
+Receive UPDATE message from all neighbors | 20
+Parse UPDATE message | 20
+Update Distance Vector, if necessary | 20
+Ignore incoming UPDATE message, if possible | 20
+Format and send HELLO message | 20
+Parse and forward/display HELLO message | 20
+ | 
+Total | 200
 
 ## References
 
 * [socket — Low-level networking interface — Python 3.7.1 documentation](https://docs.python.org/3/library/socket.html)
 
 * [select — Waiting for I/O completion — Python 3.7.1 documentation](https://docs.python.org/3/library/select.html)
-
-* [toml-lang/toml: Tom's Obvious, Minimal Language](https://github.com/toml-lang/toml)
