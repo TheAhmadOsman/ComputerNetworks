@@ -245,8 +245,7 @@ Update Distance Vector, if necessary | 20
 Ignore incoming UPDATE message, if possible | 20
 Format and send HELLO message | 20
 Parse and forward/display HELLO message | 20
- | 
-Total | 200
+**Total** | **200**
 
 ## References
 
