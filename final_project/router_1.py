@@ -6,14 +6,14 @@
 import os
 import random
 import select
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 import struct
 import sys
 import time
 
 HOST_ID = os.path.splitext(__file__)[0].split("_")[-1]
 THIS_NODE = f"127.0.0.{HOST_ID}"
-PORT = int("4300" + HOST_ID)
+PORT = int("430" + HOST_ID)
 MINE = {}
 NEIGHBORS = set()
 NEIGHBORS_EXTENDED = {}
@@ -70,7 +70,7 @@ def read_file(filename: str) -> None:
                 if skip:
                     NEIGHBORS.add(line[0])
                     MINE[line[0]] = line[1]
-                    ROUTING_TABLE[line[0]] = [line[1], None]
+                    ROUTING_TABLE[line[0]] = [line[1], THIS_NODE]
                     continue
                 if not current_neighbor in NEIGHBORS_EXTENDED:
                     NEIGHBORS_EXTENDED[current_neighbor] = []
@@ -81,12 +81,13 @@ def read_file(filename: str) -> None:
         # print(NEIGHBORS)
         # print(NEIGHBORS_EXTENDED)
 
-    print(THIS_NODE)
+    # print(THIS_NODE)
 
-    print(ROUTING_TABLE)
+    # print(ROUTING_TABLE)
 
-    # Distance Vector Algorithm
-    for neighbor in NEIGHBORS:
+    # Simulating Distance Vector Algorithm with Dijkstras Algorithm
+
+    """ for neighbor in NEIGHBORS:
         neighbor_cost = int(MINE[neighbor])
         # print("\t Neighbor:", neighbor, "cost:", neighbor_cost)
         for node in NEIGHBORS_EXTENDED[neighbor]:
@@ -96,14 +97,14 @@ def read_file(filename: str) -> None:
             hop_cost = int(node[1]) + neighbor_cost
 
             if (not node[0] in ROUTING_TABLE) or (int(ROUTING_TABLE[node[0]][0]) > hop_cost):
-                ROUTING_TABLE[node[0]] = [hop_cost, neighbor]
+                ROUTING_TABLE[node[0]] = [hop_cost, neighbor] """
 
-            # print("\t\t   ", node[0], "cost", hop_cost)
+    # print("\t\t   ", node[0], "cost", hop_cost)
 
-        # break
+    # break
     # print(NEIGHBORS_EXTENDED[neighbor])
 
-    print(ROUTING_TABLE)
+    # print(ROUTING_TABLE)
 
 
 def format_update():
@@ -143,7 +144,32 @@ def print_status():
 
 def main(args: list):
     """Router main loop"""
+
+    print(time.strftime("%H:%M:%S"), "| Router", THIS_NODE, "here")
+
     read_file(args[1])
+
+    with socket(AF_INET, SOCK_STREAM) as s:
+        print(time.strftime('%H:%M:%S'), f'| Binding to {THIS_NODE}:{PORT}')
+        s.bind((THIS_NODE, PORT))
+        s.listen(1)
+        print(time.strftime('%H:%M:%S'), f'| Listening on {THIS_NODE}:{PORT}')
+        conn, addr = s.accept()
+        with conn:
+            print(time.strftime('%H:%M:%S'), 'Connected: {}'.format(addr[0]))
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    print(time.strftime('%H:%M:%S'),
+                          'Disconnected: {}'.format(addr[0]))
+                    break
+                country = data.decode()
+                print(time.strftime('%H:%M:%S'),
+                      'User Query: {}'.format(country))
+                if country in world:
+                    conn.sendall(world[country].encode('utf-8'))
+                else:
+                    conn.sendall("NOT FOUND".encode('utf-8'))
 
 
 if __name__ == "__main__":
