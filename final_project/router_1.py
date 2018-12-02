@@ -152,8 +152,15 @@ def main(args: list):
     with socket(AF_INET, SOCK_STREAM) as s:
         print(time.strftime('%H:%M:%S'), f'| Binding to {THIS_NODE}:{PORT}')
         s.bind((THIS_NODE, PORT))
+
         s.listen(1)
         print(time.strftime('%H:%M:%S'), f'| Listening on {THIS_NODE}:{PORT}')
+
+        print('{:^20}{:^10}{:^20}'.format('Host', "Cost", "Via"))
+        for node in ROUTING_TABLE:
+            print('{:^20}{:^10}{:^20}'.format(
+                node, ROUTING_TABLE[node][0], ROUTING_TABLE[node][1]))
+
         conn, addr = s.accept()
         with conn:
             print(time.strftime('%H:%M:%S'), 'Connected: {}'.format(addr[0]))
