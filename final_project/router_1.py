@@ -11,12 +11,12 @@ import struct
 import sys
 import time
 
-HOST_ID = os.path.splitext(__file__)[0].split("_")[-1]
+HOST_ID = os.path.splitext(_file_)[0].split("_")[-1]
 THIS_NODE = f"127.0.0.{HOST_ID}"
 PORT = int("430" + HOST_ID)
-MINE = {}
+MINE = {}  # TODO
 NEIGHBORS = set()
-NEIGHBORS_EXTENDED = {}
+NEIGHBORS_EXTENDED = {}  # TODO
 ROUTING_TABLE = {}
 TIMEOUT = 5
 MESSAGES = [
@@ -54,6 +54,8 @@ def read_file(filename: str) -> None:
 
     skip = False
     current_neighbor = ""
+
+    # This is more complicated than it should be - but I was debugging and some of the stuff here is used later for doulbe checking results with Dijkstras
     with open(filename, "r") as f:
         for line in f:
             line = line.split()
@@ -70,7 +72,7 @@ def read_file(filename: str) -> None:
                 if skip:
                     NEIGHBORS.add(line[0])
                     MINE[line[0]] = line[1]
-                    ROUTING_TABLE[line[0]] = [line[1], THIS_NODE]
+                    ROUTING_TABLE[line[0]] = [line[1], line[0]]
                     continue
                 if not current_neighbor in NEIGHBORS_EXTENDED:
                     NEIGHBORS_EXTENDED[current_neighbor] = []
@@ -138,8 +140,17 @@ def send_hello(msg_txt, src_node, dst_node):
 
 
 def print_status():
-    """Print status"""
-    raise NotImplementedError
+    """
+        Print status.
+
+        Print current routing table.
+        The function must print the current routing table in a human-readable format (rows, columns, spacing).
+    """
+
+    print('{:^20}{:^10}{:^20}'.format('Host', "Cost", "Via"))
+    for node in ROUTING_TABLE:
+        print('{:^20}{:^10}{:^20}'.format(
+            node, ROUTING_TABLE[node][0], ROUTING_TABLE[node][1]))
 
 
 def main(args: list):
@@ -156,10 +167,7 @@ def main(args: list):
         s.listen(1)
         print(time.strftime('%H:%M:%S'), f'| Listening on {THIS_NODE}:{PORT}')
 
-        print('{:^20}{:^10}{:^20}'.format('Host', "Cost", "Via"))
-        for node in ROUTING_TABLE:
-            print('{:^20}{:^10}{:^20}'.format(
-                node, ROUTING_TABLE[node][0], ROUTING_TABLE[node][1]))
+        print_status()
 
         conn, addr = s.accept()
         with conn:
@@ -179,5 +187,5 @@ def main(args: list):
                     conn.sendall("NOT FOUND".encode('utf-8'))
 
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main(sys.argv)
