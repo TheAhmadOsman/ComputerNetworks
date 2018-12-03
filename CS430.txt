@@ -554,4 +554,14 @@ Dijkstra's Algorithm HW is going to be on the exam.
 
 If a link between W and Z starts gets to get lower cost, like 0, they have an incentive to hid their cost because of congestion.
 
+Calculator on the final exam
 
+ICMP
+
+prefixes for Size.
+
+IPv6 can have a max of 7 colons
+
+hw 9 -> 8(3), 9(2), 10(2)
+
+For final project, you open the socket, finish the message, and close the socket. you use the last octact of the ip address of the client to initiate a connection with them later.
