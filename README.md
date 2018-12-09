@@ -123,8 +123,6 @@ You should use `bytearray` or `struct` to format and parse messages.
 
     2. If DELIVERY, then forward to the destination
 
-    3. If STATUS, then respond with the routing table
-
 3. Is `update_vector` flag set?
 
     1. Send the new vector to all neighbors that can accept data
