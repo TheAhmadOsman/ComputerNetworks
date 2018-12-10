@@ -25,6 +25,9 @@ MESSAGES = [
     "Precise Pangolin"
 ]
 
+CONNECTED = set()
+NEW_CONNECTIONS = set()
+
 # MINE = {}  # TODO
 # NEIGHBORS_EXTENDED = {}  # TODO
 
@@ -283,9 +286,13 @@ def main(args: list):
                 for n in NEIGHBORS:
                     send_update(n)
 
-            for n in NEIGHBORS:
-                if not n in INPUTS:
-                    send_update(n)
+            for i in INPUTS:
+                CONNECTED.add(i.getsockname()[0])
+                
+            NEW_CONNECTIONS = NEIGHBORS - CONNECTED
+
+            for n in NEW_CONNECTIONS:
+                send_update(n)
 
 if __name__ == "__main__":
     main(sys.argv)
