@@ -257,6 +257,7 @@ def main(args: list):
             update_vector = False
 
             if random.randint(0, 1000000) < 10:
+                time.sleep(random.randint(2, 8))
                 send_msg = random.choice(MESSAGES)
                 send_to = random.choice(list(ROUTING_TABLE.keys()))
                 send_hello(send_msg, THIS_NODE, send_to)
