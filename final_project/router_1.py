@@ -53,7 +53,7 @@ def read_file(filename: str) -> None:
                     ROUTING_TABLE.update({line[0]: [int(line[1]), line[0]]})
                     NEIGHBORS.add(line[0])
 
-    # This is way more complicated - meant for Dijkstra's comparison with Distance Vector
+    # This is way more complicated - meant for Dijkstra's comparison with Distance Vector # TODO
     """ skip = False
     current_neighbor = ""
 
@@ -201,7 +201,7 @@ def parse_hello(msg):
               f'| Received {msg_txt.decode()} from {src_addr}')
     else:
         print(time.strftime('%H:%M:%S'),
-              f'| Forwarding message from {src_addr} to {dst_addr}')
+              f'| Forwarding message from {src_addr} to {dst_addr} via {ROUTING_TABLE[dst_addr][1]}')
         send_hello(msg_txt.decode(), src_addr, dst_addr)
 
 
@@ -256,7 +256,7 @@ def main(args: list):
                 INPUTS, [], [], TIMEOUT)
             update_vector = False
 
-            if random.randint(0, 100) < 10:
+            if random.randint(0, 1000000) < 10:
                 send_msg = random.choice(MESSAGES)
                 send_to = random.choice(list(ROUTING_TABLE.keys()))
                 send_hello(send_msg, THIS_NODE, send_to)
@@ -265,14 +265,13 @@ def main(args: list):
 
             for r in readable:
 
-                time.sleep(2)
-
                 recv, addr = server.recvfrom(1024)
                 if recv:
                     msg_type = int.from_bytes(recv[0:1], byteorder='big')
                     if msg_type == 0:
                         update_vector = parse_update(recv, addr[0])
                         if update_vector:
+                            time.sleep(random.randint(2, 8))
                             print(time.strftime('%H:%M:%S'),
                                   f'| Table updated with information from {addr[0]}')
                             print_status()
@@ -288,11 +287,12 @@ def main(args: list):
 
             for i in INPUTS:
                 CONNECTED.add(i.getsockname()[0])
-                
+
             NEW_CONNECTIONS = NEIGHBORS - CONNECTED
 
             for n in NEW_CONNECTIONS:
                 send_update(n)
+
 
 if __name__ == "__main__":
     main(sys.argv)
