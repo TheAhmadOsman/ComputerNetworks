@@ -143,7 +143,7 @@ def parse_update(msg, neigh_addr):
         if ip in ROUTING_TABLE:
             if ROUTING_TABLE[ip][0] > int(cost + ROUTING_TABLE[neigh_addr][0]):
                 ROUTING_TABLE[ip] = [
-                    (cost + int(ROUTING_TABLE[neigh_addr][0])), neigh_addr]
+                    (cost + int(ROUTING_TABLE[neigh_addr][0])), ROUTING_TABLE[neigh_addr][1]]
                 update = True
         elif ip == THIS_NODE:
             continue
@@ -283,6 +283,9 @@ def main(args: list):
                 for n in NEIGHBORS:
                     send_update(n)
 
+            for n in NEIGHBORS:
+                if not n in INPUTS:
+                    send_update(n)
 
 if __name__ == "__main__":
     main(sys.argv)
