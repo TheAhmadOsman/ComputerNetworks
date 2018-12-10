@@ -201,7 +201,7 @@ def parse_hello(msg):
               f'| Received {msg_txt.decode()} from {src_addr}')
     else:
         print(time.strftime('%H:%M:%S'),
-              f'| Forwarding message from {src_addr} to {dst_addr} via {ROUTING_TABLE[dst_addr][1]}')
+              f'| Forwarding {msg_txt.decode()} from {src_addr} to {dst_addr} via {ROUTING_TABLE[dst_addr][1]}')
         send_hello(msg_txt.decode(), src_addr, dst_addr)
 
 
