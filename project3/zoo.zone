@@ -1,0 +1,58 @@
+$ORIGIN cs430.luther.edu.
+$TTL 1m
+emu            1w   IN   A         70.15.79.109
+               1m   IN   A         157.96.36.98
+               1m   IN   AAAA      cfd0:486c:21a9:7edd:9269:5856:9a6e:52e1
+duck           1w   IN   A         30.237.15.163
+               1w   IN   AAAA      4491:cfc:eee:8bf9:d42b:521d:6b1d:caf
+viper          1y   IN   A         54.118.84.148
+               1y   IN   AAAA      97f2:cebe:454a:496:3d4c:f64d:2950:3d42
+ant            1h   IN   A         185.84.224.89
+               1h   IN   A         199.83.67.158
+               1h   IN   AAAA      4a9a:70ec:3ac0:c684:359e:8d37:9486:5959
+hawk           1w   IN   A         90.103.161.91
+               1w   IN   AAAA      2216:793a:9f8d:5237:3b18:61ab:212f:5738
+bear           1w   IN   A         241.152.243.10
+               1w   IN   AAAA      b82e:40f2:4a7f:466b:efd0:3654:f454:25b9
+cat            1d   IN   A         34.28.140.109
+               1d   IN   AAAA      f76b:c394:ed45:4464:3915:822c:1390:4682
+zebra          1w   IN   A         124.25.11.229
+               1w   IN   AAAA      93c8:5a1d:45e0:8be8:27bc:6659:1dc6:ed27
+lion           1m   IN   A         210.249.68.68
+                    IN   A         145.163.1.144
+                    IN   AAAA      e1b8:c223:8c44:53b0:6c6d:6a56:5cd:867b
+oryx           1d   IN   A         66.244.135.103
+               1d   IN   AAAA      c085:3375:ff16:8a70:5cac:f6a8:5f76:8988
+seal           1y   IN   A         172.198.93.55
+               1y   IN   AAAA      c672:42b1:45dd:5eda:2b2b:bc6:cca7:946d
+kudu           1y   IN   A         199.157.135.217
+               1y   IN   AAAA      99c9:9e2f:5cbb:f22d:7b97:7a3d:1087:a955
+urial          1w   IN   A         245.84.169.153
+               1y   IN   A         241.81.245.84
+               1y   IN   AAAA      1d77:1069:8f62:7bb1:c830:cf8d:3b5:376d
+rat                 IN   A         116.102.240.67
+               1h   IN   A         40.162.130.241
+               1h   IN   AAAA      2bb5:8bc8:4d6:b39:5186:755:3392:f5ff
+ibis           1s   IN   A         110.23.32.132
+               1s   IN   AAAA      955b:aca9:7b54:7248:433a:e12b:6697:99d0
+yak            1y   IN   A         75.191.54.34
+               1y   IN   AAAA      f68e:56bb:fd53:8176:4bf:25c8:c537:81e5
+topi           1m   IN   A         86.96.30.194
+               1m   IN   AAAA      12ad:349d:a28:6836:767a:51b4:aa21:3120
+wolf           1y   IN   A         93.187.49.252
+               1y   IN   AAAA      7e6c:f398:6c4:432c:a5eb:b080:71b9:eba9
+mara           1m   IN   A         160.159.185.33
+               1m   IN   AAAA      1039:551c:4c43:bfc3:4733:5d81:73e4:c9a5
+puma                IN   A         70.84.137.68
+                    IN   A         60.168.65.2
+                    IN   AAAA      774c:b954:7e7b:5b3:1e9d:fe7b:7c3f:68a6
+quail               IN   A         228.55.207.204
+                    IN   AAAA      15db:d0d3:ca94:1491:88d4:8bc7:e762:41ac
+fox            1h   IN   A         192.243.47.158
+               1h   IN   AAAA      28f3:4f3b:c12a:65a5:d9fe:e7dc:dd64:c124
+gaur           1y   IN   A         20.164.186.120
+               1y   IN   AAAA      b753:d7a:9016:e948:b2a8:015:7523:43d2
+jaguar              IN   A         50.22.17.142
+                    IN   AAAA      9ac7:3837:307f:82dd:6a17:ed19:34ba:ebf1
+nyala          1d   IN   A         16.37.65.66
+               1d   IN   AAAA      05:2c96:d58d:d422:8fa4:da2c:2445:c231

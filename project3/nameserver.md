@@ -4,13 +4,13 @@ Complete the following programming project and push code to your GitHub reposito
 
 **Process records of type A (IPv4) or AAAA (IPv6) only. If a client requests anything else, ignore it.**
 
-Use your DNS resolver to initiate requests to the server.
+Use your DNS resolver or nslookup to initiate requests to the server.
 
 ```
 python3 nameserver.py zoo.zone
 ```
 
-1. Read the zone file *zoo.zone* and resolve names found there.
+1. Read the zone file *zoo.zone* and resolve names found there. You **do not** need to process *cs430.zone*.
 
 2. Create a UDP socket connection and wait for a message from the DNS resolver.
 
