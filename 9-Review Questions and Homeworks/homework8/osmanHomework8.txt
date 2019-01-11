@@ -1,0 +1,44 @@
+1-Suppose Host A sends two sequential TCP segments to Host B over TCP. Sequence number of the first segment is 430, its size is 30 bytes. What is the sequence number of the second segment?
+    460
+
+
+2-Suppose Host A sends two sequential TCP segments to Host B over TCP. Sequence number of the first segment is 430, its size is 30 bytes. First packet is lost, but the second is delivered successfully. What is the acknowledgement number sent from Host B to Host A in the ACK message?
+    430
+
+
+3-Is TCP closer to the Go-Back-N or Selective Repeat algorithm? Explain your answer.
+    TCP is closer to Selective Repeat rather than G-Back-N because when a packet is lost due to congestion, under the TCP protocol, the sender does not have to retransmit all the unacknowledged packets bur rather retransmit the oldest unacknowledged packet, which is a Selective Repeat algorithm. Go-Back-N, on the other hand, would retransmit all the packets from the point of the oldeest unacknowledged packet.
+
+
+4-Briefly explain the need for 3 (three) messages in the TCP handshake. Could we use fewer messages? Should we use more?
+    The three-way handshakes makes TCP a connection-oriented protocol. The number three, for the three-way handshake, was not chosen abruptly but rather to serve a purpose of having both the sender and the receiver synchronize and acknowledge each others Initial Sequence number, so we should not user fewer, and we should not use more because, unless we are transmitting data, the connection has been established and the SYN, SYN/ACK, and ACK process has been achieved by this three-way handshake. I think this is the best way to establish connection, no more and no less of a handshake is needed.
+
+
+5-What is the difference between TCP Reno and Tahoe? 
+    Tahoe, at congestion, treats triple duplicate ACKs the same way it treats a timout, and when either happen it performs a fast retransmit, reduces the congestion window to 1, and enters slow-start. However, for Reno, when a triple duplicate ACKs are received, the congestion window gets halfed, and performs a fast retransmit and then start recovry. In case of a timeout, Reno will enter a slow-start the same way Tahoe does.
+
+
+6-Consider the following packet (part of a Telnet session). What are the expected sequence number and acknowledgment number in the response packet (sent from server to client)?
+    Seq: 4168689280
+    Ack: 3191800522
+
+
+7-What are the time intervals of TCP slow start?
+    The slow start times are from 1 to 6 and from 23 to 26.
+
+
+8-What causes window shrinkage after the 16th round?
+    Triple duplicate ACKs.
+
+
+9-What causes window shrinkage after the 22nd round?
+    A timeout.
+
+
+10-During what transmission round is the 70th segment sent?
+    The 70th segment is sent in the 7th transmission round.
+
+-----
+
+General notes to myself:
+    TCP: makes sure that both the Client and the Server are ready for the data transmissions, and helps in figuring out congestional control and flow control.

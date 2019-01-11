@@ -1,0 +1,88 @@
+1-Why does IP fragmentation happen? What network entity is responsible for the fragments reassembly?
+
+    IP fragmentation happens if the maximum transmission unit of a given link is smaller than the size of the packet. Any packet going through IP fragmentation would have to be broken into smaller chunks, or fragments, in order to be able to pass through the MTU. Acording to RFC 791, the reassembly takes place at the destination internet protocol module in the destination host.
+
+
+2-What problem(s) does NAT solve? Briefly describe any major shortcoming of this technology.
+
+    NAT tries to solve the issue of the finite amount of IPv4 addresses available. This technology allows the router to act as the single IP address for all the connect devices preverving IPv4 addresses and providing some kind of a buffer to protect against hackers and melecious attacks. The protection happens as the router is standing between any kind of connection to any of the devices connected to that router. However, NAT can also be quite inconvenient as the connected devices' IP addresses change every so often, which can complicate things such as a connection between from one device to another specific device on the same network. NAT also have some common problems with gaming devices (PS, XBox, and Nitendo for example).
+
+
+3-Consider sending a 2400-byte datagram into a link that has an MTU of 700 bytes. Suppose the original datagram is stamped with the identification number 422. How many fragments are generated? What are the values in the various fields in the IP datagram(s) generated related to fragmentation?
+
+    Four fragments are generated - the packets will look like this:
+        Packet 1: len=700, id=422, fragflag=1, offset=0
+        Packet 2: len=700, id=422, fragflag=1, offset=85
+        Packet 3: len=700, id=422, fragflag=1, offset=170
+        Packet 4: len=360, id=422, fragflag=0, offset=255
+
+
+4-Suppose datagrams are limited to 1,500 bytes (including header) between source Host A and destination Host B. Assuming a 20-byte IP header, how many datagrams would be required to send an MP3 consisting of 5 million bytes? Explain how you computed your answer.
+
+    1500 - 20 = 1480 bytes per datagram
+    5000000 / 1480 = 3378.378
+        Therefore 3379 datagrams are required to send this MP3
+
+
+5-ARIN's free pool of IPv4 address space was depleted on 24 September 2015. What does it mean for the future of Internet?
+
+    This means the scarcity and the directly proportional the increase of prices for IPv4 addresses. This also can mean that IPv6 will, sooner or later, have to replace IPv4. ARIN's free pool of IPv4 address space being depleted means that at some point or another, an alternative has to be used, and luckily, that alternative, IPv6, is available - adopting to that alternative, IPv6, is the most practical way for the internet to prosper and continue its progressing. Also, IPv6 has improved security more than IPv4, besides solving the problem of the addresses scarcity.
+
+
+6-Use ARIN's whois service to find IP address blocks allocated to Luther College and one other college/university. Can the whois service be used to determine precise geographical location of a specific IP address? Use IP Location Finder or a similar service to determine locations of Web servers of both colleges.
+
+    Luther College
+        2620:DD:4000:: - 2620:DD:4000:FFFF:FFFF:FFFF:FFFF:FFFF
+        192.203.196.0 - 192.203.196.255
+        198.133.77.0 - 198.133.77.255
+        66.43.231.0 - 66.43.231.255
+        66.43.252.0 - 66.43.252.255
+        74.207.32.0 - 74.207.63.255
+    Earlham College
+        159.28.0.0 - 159.28.63.255
+
+    IP addresses can be used to find geographical locations to some relative extent of accuracy. Sometimes the estimates of the locations by IP addresses can be only hundred meters off while some other times it can be kilometers away from the location.
+
+
+
+
+Consider the attached network topology when answering questions 7-10:
+    Assign network addresses to each of these six subnets (the assignment should take the form a.b.c.d/x), with the following constraints:
+        All addresses must be allocated from 214.97.254.0/23; ignore the class of the address, /23 is a valid mask.
+        Subnet A should have enough addresses to support 250 interfaces;
+        Subnet B should have enough addresses to support 120 interfaces;
+        Subnet C should have enough addresses to support 120 interfaces.
+        Subnets D, E, and F should each be able to support two interfaces.
+
+
+7-What are the network address, broadcast address, and mask of the network A? How many host addresses are allocated to this network?
+
+    Network address: 214.97.254.0
+    Mask: /24
+    Host addresses: 214.97.254.1 - 214.97.254.254
+    Broadcast address: 214.97.254.255
+    Hosts: 254
+
+
+8-What are the network address, broadcast address, and mask of the network B? How many host addresses are allocated to this network?
+
+    Network address: 214.97.255.0
+    Mask: /25
+    Host addresses: 214.97.255.1 - 214.97.255.126
+    Broadcast address: 214.97.255.127
+    Hosts: 126
+
+
+9-What are the network address, broadcast address, and mask of the network C? How many host addresses are allocated to this network?
+
+    Network address: 214.97.255.128
+    Mask: /25
+    Host addresses: 214.97.255.129 - 214.97.255.254
+    Broadcast address: 214.97.255.255
+    Hosts: 126
+
+
+10-What are the network addresses, broadcast addresses, and masks of the networks D, E, and F? How many host addresses are allocated to these networks?
+
+    We ran out of addresses - and good practice solutions - to fulfill the of for networks D, E, and F.
+

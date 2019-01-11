@@ -1,0 +1,215 @@
+       00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+0000   00 0c 29 2e 74 b0 00 50 56 f0 c0 ba 08 00 45 00
+0010   00 7e 15 7b 00 00 80 11 84 4a ac 10 24 02 ac 10
+0020   24 87 00 35 98 3b 00 6a e8 34 3b 98 81 80 00 01
+0030   00 02 00 00 00 00 04 61 72 69 6e 03 6e 65 74 00
+0040   00 1c 00 01 04 61 72 69 6e 03 6e 65 74 00 00 1c
+0050   00 01 00 00 00 05 00 10 20 01 05 00 00 04 c0 00
+0060   00 00 00 00 00 00 00 43 04 61 72 69 6e 03 6e 65
+0070   74 00 00 1c 00 01 00 00 00 05 00 10 20 01 05 00
+0080   00 04 c0 00 00 00 00 00 00 00 00 44
+
+Answer the following questions and submit your answers as a single file (txt, rtf, docx, or pdf). Explain your answers by using specific values (and their location) from the captured frame.
+
+1-What is the sender's MAC address? 
+    Sender's Mac address: 00:50:56:f0:c0:ba
+    Located in the 6 bytes between 6-0B, 00 50 56 f0 c0 ba, on the 0000 row.
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000                     00 50 56 f0 c0 ba
+
+
+2-What Network layer protocol is used?
+    IPv4 is the network layer protocol used
+    Located in the 20 bytes between OE on row 0000 and 01 on row 0020.
+
+               00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+        0000                                             45 00
+        0010   00 7e 15 7b 00 00 80 11 84 4a ac 10 24 02 ac 10
+        0020   24 87 
+
+
+3-What is the sender's Network address?
+    Sender's address: 172.16.36.2
+    Located in the 4 bytes between 0A and 0D on row 0010.
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010                                 ac 10 24 02
+
+
+4-What Transport layer protocol is used?
+    UPD is the transport layer protocol used
+    Located in the 8 bytes between 02 and 09 in row 0020.
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020         00 35 98 3b 00 6a e8 34
+
+
+5-What is the size of the transport layer datagram/segment?
+    8 bytes between 02 and 09 in row 0020.
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020         00 35 98 3b 00 6a e8 34
+
+
+6-What Application layer protocol is used?
+    Domain Name System
+    Located in the 98 bytes between  0A on row 0020 and 0B on row 0080
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020                                 3b 98 81 80 00 01
+    0030   00 02 00 00 00 00 04 61 72 69 6e 03 6e 65 74 00
+    0040   00 1c 00 01 04 61 72 69 6e 03 6e 65 74 00 00 1c
+    0050   00 01 00 00 00 05 00 10 20 01 05 00 00 04 c0 00
+    0060   00 00 00 00 00 00 00 43 04 61 72 69 6e 03 6e 65
+    0070   74 00 00 1c 00 01 00 00 00 05 00 10 20 01 05 00
+    0080   00 04 c0 00 00 00 00 00 00 00 00 44
+
+7-Is it a request or response?
+    Response
+    Located in the 2 bytes between  0C and 0D on row 0020
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020                                       81 80
+
+
+8-What kind of request is this? What was the question?
+    AAAA request - find IPv6 address of arin.net
+    Located in the 14 bytes between 06 or row 0030 and 03 on row 0040
+    
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030                     04 61 72 69 6e 03 6e 65 74 00
+    0040   00 1c 00 01
+
+
+9-What kind of response is this? Does it answer the question? How many answers are there?
+    Type AAAA Response, IPv6 address and it answers the question, and there are 2 answers.
+    First answer located in the 36 bytes between 04 on row 0040 and 07 or row 0060
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040               04 61 72 69 6e 03 6e 65 74 00 00 1c
+    0050   00 01 00 00 00 05 00 10 20 01 05 00 00 04 c0 00
+    0060   00 00 00 00 00 00 00 43
+
+    The IPv6 address is: 2001:500:4:c000::43
+
+    Located in the 16 bytes between 08 on row 0050 and 07 on row 0060
+    
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040               
+    0050                            20 01 05 00 00 04 c0 00
+    0060   00 00 00 00 00 00 00 43
+
+    --------------------------
+
+    Second answer located in the 36 bytes between 08 on row 0060 and 0B or row 0080
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040
+    0050
+    0060                           04 61 72 69 6e 03 6e 65
+    0070   74 00 00 1c 00 01 00 00 00 05 00 10 20 01 05 00
+    0080   00 04 c0 00 00 00 00 00 00 00 00 44
+
+    The IPv6 address is: 2001:500:4:c000::44
+
+    Located in the 16 bytes between 0C on row 0070 and 0B or row 0080
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040
+    0050
+    0060                           
+    0070                                       20 01 05 00
+    0080   00 04 c0 00 00 00 00 00 00 00 00 44
+
+
+10-Provide any additional details about the frame and its content.
+    For the first response answer, the TTL (Time-to-live) is 5 seconds.
+
+    Located in the 4 bytes between 02 and 05 on row 0050.
+    
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040               
+    0050         00 00 00 05
+
+
+    For the second response answer, the TTL (Time-to-live) is 5 seconds.
+
+    Located in the 4 bytes between 06 and 09 on row 0070.
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040
+    0050
+    0060
+    0070                     00 00 00 05
+
+    --------------------------
+    
+    For the first response answer, the IPv6 address is: 2001:500:4:c000::43
+
+    Located in the 16 bytes between 08 on row 0050 and 07 on row 0060
+    
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040               
+    0050                            20 01 05 00 00 04 c0 00
+    0060   00 00 00 00 00 00 00 43
+
+
+    For the second response answer, the IPv6 address is: 2001:500:4:c000::44
+
+    Located in the 16 bytes between 0C on row 0070 and 0B or row 0080
+
+           00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+    0000   
+    0010   
+    0020
+    0030
+    0040
+    0050
+    0060                           
+    0070                                       20 01 05 00
+    0080   00 04 c0 00 00 00 00 00 00 00 00 44
+
+    --------------------------
+
+    Besides that, usually when getting response back from the server, a pointer of c00c, called an offset, is usually present to help you guide us to the answers. However, instead of using this pointer, the responses are using the domain name instead of using the c00c pointer to lead us to the answers.

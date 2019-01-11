@@ -32,6 +32,9 @@ I took this class in Fall 2018. Each folder is its own project with the implemen
 8. Distance Vector Routing Protocol
     * Implementation of a routing protocol using Distance Vector algorithm.
 
-You can find homework review questions and their answers in their corresponding branches.
+9. Review Questions
+    * Homework review questions and their answers
+
+You can find projects and homework review questions and their answers in their corresponding branches, too.
 
 Feel free to clone this repository and to explore the projects.

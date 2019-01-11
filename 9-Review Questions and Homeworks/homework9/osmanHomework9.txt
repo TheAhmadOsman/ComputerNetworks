@@ -1,0 +1,67 @@
+1-What is the difference between forwarding and routing?
+    Forwarding refers to a datagram being sent from one device to another in a path to the destination. Forwarding is also done within the routing process. 
+    
+    Routing is a network-wide process to make a decision about the end-to-end paths that packets should take starting from the source until reaching destination.
+
+
+2-What are the advantages of circuit switching over packet switching and vice versa?
+    A network that uses circuit switching guarantees a specific amount of end-to-end bandwidth for the duration of the connection, while most of the networks - even the Internet - that use packet switching cannot guarantee a specific amount of end-to-end bandwith for the duration of the connection. Circuit switching guarentees quality.
+
+    However, packet switching is relatively cheap compared to circuit switching - that requires a dedicated circuit. Also, packet switching would maximize the usage of a circuit, while for circuit switching, the unavailability of circuts means adding connections will not be possible. Usage efficiency is low in circuit switching relative to packet switching.
+
+
+3-What network service (delivery, delay, bandwidth, security) do you think is the most important? Explain your answer.
+    I think that bandwith is the most important network service. It is the most essential factor when it comes to improving the experience of internet surfing and multimedia streaming - this does not only apply to entertainment but can also apply to large data being transfered from one point to another for scientific reasons, or to compress/extract data at specific data centers like what they do at Mayo Clinic with their daily large produced genomes. Bandwidth makes our experience smoother and opens up more possiblities for an even more smoother and better experience.
+
+
+4-What is a router's switching fabric?
+    Basically, a router's switching fabric connects its own input and output ports. It controls the trafic of the connections and transfers packets from one point to another where they should be.
+    
+
+5-It was noted that the maximum queuing delay is (n–1)D if the switching fabric is n times faster than the input line rates. Suppose that all packets are of the same length, n packets arrive at the same time to the n input ports, and all n packets want to be forwarded to different output ports. What is the maximum delay for a packet for the memory, bus, and crossbar switching fabrics? To answer the question consider the max number of packets that can be processed using each switching fabric (1 or n).
+    The maximum delay for a packet for the memory switching fabric is (n-1)D as the memory only allows a one at a time packet transfer.
+
+    The maximum delay for a packet for the bus switching fabric is (n-1)D as the bus only allows a one at a time packet transfer.
+
+    The maximum delay for a packet for the crossbar switching fabric  is 0 as crossbar utilizies parallel prcoessing. 
+    
+
+6-Briefly explain the idea of the longest prefix match in forwarding.
+    The longest prefix match is used by routers in order to figure out which ip should have a packet forwarded to when the destination's IP prefix has multiple possible matches within a table of outputs. The router querys for and determines the IP address with the longest matching prefix when compared to the packet's destination IP.
+   
+
+Use the following table when answering questions 7-10:
+
+Destination Address Range Start			Destination Address Range End			Link Interface
+
+11100000 00000000 00000000 00000000	11100000 00111111 11111111 11111111	0
+
+11100000 01000000 00000000 00000000	11100000 01000000 11111111 11111111	1
+
+11100000 01000001 00000000 00000000	11100001 01111111 11111111 11111111	2
+
+default								default								3
+
+7-Provide a forwarding table that has four entries, uses longest prefix matching, and forwards packets to the correct link interfaces. Remember that the table should use prefixes for routing.
+                Prefix Match                        Link Interface
+    11100000 00xxxxxx xxxxxxxx xxxxxxxx                    0
+    11100000 01000000 xxxxxxxx xxxxxxxx                    1
+    1110000x xxxxxxxx xxxxxxxx xxxxxxxx                    2
+    11100001 1xxxxxxx xxxxxxxx xxxxxxxx                    3
+                 default                                   3
+
+
+8-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11001000 10010001 01010001 01010101.
+    Prefix matching for this destination address points to Link 3
+        This is because the destination address starts with 11001000 1, which is Link 3.
+
+
+9-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11100001 01000000 11000011 00111100.
+    Prefix matching for this destination address points to Link 2
+        This is because the destination address starts with 11001001 0, which is within the range of Link 2 and yet does not reach the starting range of Link 3; making this Link 2.
+
+
+10-Describe how your forwarding table determines the appropriate link interface for a packet with the destination address of 11100001 10000000 00010001 01110111.
+    Prefix matching for this destination address points to Link 3
+        This is because the destination address starts with 11001000 1, which is Link 3.
+

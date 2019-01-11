@@ -1,0 +1,129 @@
+1-What is the purpose of source and destination port numbers in a transport protocol?
+    The purpose of source and destination port numbers is the binding of a specific process(application) with a specific source and destination ports, so that the process can send and receive data via the network on those ports. The OS takes care of transmitting the data in and out of the network, via the specific ports, to and from the processes listening and sending on those specific ports. Transport layer protocols, such as TCP and UDP, use source and destination ports to specify the source and destination processes that should send and receive the data in transportation.
+
+
+2-What is the difference, if any, between UDP and TCP sockets?
+    For TCP sockets' connections, the TCP stack is in charge of making sure that the data is being sent to the network and then being delivered to the receiver, and making suring the it is retransmitted until the receiver acknowledges this data. In addition to that, TCP connections are flow-control oriented, meaning that the data is transmitted at a suitable rate for the network connections of the sender and the receiver. TCP connections also make sure that the receiver receives the data only on time and receive it in the correct order too.
+
+    For UDP sockets' connections, the data transmissions needs to be managed by the programmer, meaning that the programmer needs to take care of the lost and out of order packets, the flow control, and the fragmentation of the data into packets that can be transmitted over the network connections. UDP sockets simply mean sending and receiving data from and to addresses (and ports if specified) - the UDP sockets do not take charge of making sure the data gets sent or received correctly, this is the programmer's job when using UDP sockets.
+
+
+3-What is the difference between error detection and correction? Which one is provided by UDP?
+    Error detection is to check, via checksum, the integrity of the received data. TCP Transport layer dismisses any data that is bad/corrupted and goes on to do error correction. Error correction happens via automatic repeat request (ARQ) to retransmit the data and check its integrity -error detection- until it is the valid and correct data. UDP provides error detection via checksum integrity check. The UDP checksum is optional. For UDP, having no error correction, and even having error detection as optional, are some of the reasons why UDP is faster than TCP. 
+
+
+4-Currently checksum is calculated at various levels of the TCP/IP stack. Do you think it's necessary, or is it enough to do once?
+    The checksum happens at multiple levels because there are multiple sources of errors, including losing data at the physical level, giving a reason for checksum to happen at the Ethernet level, however, the checksum on the Ethernet level is not perfect. IPv4 checks for the header checksum and leaves the rest for the Transportation layer, and sometimes the Application layer can have its own checksum too (like peer-to-peer applications). However, all of that is not necessary, and for example, in IPv6 the checksum was removed and left to be done over the Transportation layer. The layer of Ethernet is very old, and at the same time, the checksum happening on this level is very fast, so there is nothing wrong with leaving the Ethernet layer checksum. Between the checksum over the Ethernet layer and the checksum over the Transportation layer, we are confident that any bad/corrupted packets would be caught.
+
+
+5-What do you think of QUIC? What problems does it solve? What are its advantages over traditional protocols?
+    QUIC, a recently developed transportation protocol by Google, is an improvement over TCP. One of its main features is the acceleration of HTTP traffic while at the same time being more secure than TCP. To put in simpler words, QUIC is far more secure than TCP while being faster than TCP as well. QUIC does not require multiple connections, like TCP, because of the multiplexing exchanges. Looking at the improvements to speed and security, QUIC has major advantages when compared to traditional protocols.
+
+
+For questions 6-10 consider the following packet and read UDP Checksum HowTo. Note that first row (00-0F) and first column (0000-0040) are not part of the packet data.
+       00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
+0000   00 50 56 f6 42 4e 00 0c 29 01 0f c7 08 00 45 00
+0010   00 34 bd fe 40 00 40 11 be e5 c0 a8 9e 81 c0 a8
+0020   9e 02 a4 31 00 35 00 20 be 06 1f 71 01 00 00 01
+0030   00 00 00 00 00 00 02 66 62 03 63 6f 6d 00 00 01
+0040   00 01
+
+
+6-What is the source IP address of this datagram in hexadecimal and dot-decimal notation?
+    Hexadecimal: c0 a8 9e 81
+    Dot-decimal: 192.168.158.129
+
+
+7-What is the destination IP address of this datagram in hexadecimal and dot-decimal notation?
+    Hexadecimal: c0 a8 9e 02
+    Dot-decimal: 192.168.158.2
+
+
+8-What is the length of this datagram?
+    Looking at the packets, we can see that there is the following:
+        20 bytes for the IPv4
+        8 bytes for the UDP
+        24 bytes for the DNS
+
+    However, a datagram is equal to UDP + Data = 8 bytes + 24 bytes = 32 bytes. This is equal to the value of the length in the UDP Datagram.
+
+    Datagram length = 32 bytes.
+
+
+9-What is the checksum of this datagram?
+    0xbe06 which Wireshark considers incorrect
+    0x4825 for the pseudo part, the UDP part, and the Data part - Wireshark says: (maybe caused by "UDP checksum offload"?)
+
+
+10-Verify the checksum of this datagram. Show your work.
+    Pseudo Bytes
+        SRC IP: c0 a8 
+                9e 81
+        DST IP: c0 a8 
+                9e 02
+        0+prot: 00 11
+
+    UDP Bytes
+        SRT PT: a4 31
+        DST PT: 00 35
+        Length: 00 20
+        CHKSUM: 00 00
+
+    Data Bytes:
+        1f 71 
+        01 00 
+        00 01 
+        00 00 
+        00 00 
+        00 00 
+        02 66
+        62 03
+        63 6f 
+        6d 00 
+        00 01 
+        00 01
+
+    -----------------------------------
+
+    In Python3:
+        chk_pseudo = 0xc0a8 + 0x9e81 + 0xc0a8 + 0x9e02 + 0x0011
+        hex(chk_pseudo)
+
+            OUTPUT: '0x2bde4'
+
+        chk_udp = 0xa431 + 0x0035 + 0x0020 + 0x0000
+        hex(chk_udp)
+
+            OUTPUT: '0xa486'
+
+        chk_data = 0x1f71 + 0x0100 + 0x0001 + 0x0000 + 0x0000 + 0x0000 + 0x0266 + 0x6203 + 0x636f + 0x6d00 + 0x0001 + 0x0001
+        hex(chk_data)
+            
+            OUTPUT: '0x1554c'
+
+
+        chk_full = chk_pseudo + chk_udp + chk_data
+        hex(chk_full)
+
+            OUTPUT: '0x4b7b6'
+    
+        bin(chk_full)
+
+            OUTPUT: '0b1001011011110110110'
+    
+    -----------------------------------
+
+    Add the following for overflow
+        1011011110110110
+                     100
+        ________________
+        1011011110111010
+
+    Doing one's compliment
+
+        0100100001000101
+    
+    Converting to Hexadecimal:
+        4845
+
+    The calculated checksum is: 0x4845
